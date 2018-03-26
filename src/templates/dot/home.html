@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <a class="navbar-brand" href="#">Department of Telecommunications Ministry of Communication</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse text-white" id="collapsibleNavbar">
+        <ul class="navbar-nav ml-auto">
+
+            {% if session['uid'] == None %}
+                <li class="nav-item">
+                    <a class="nav-link text-white btn btn-success" href="#">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Home</a>
+                </li>
+            {% else %}
+
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url_for('.redirect_to_dash') }}">To Dash</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white btn btn-danger" href="{{ url_for('.logout') }}">Logout</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="jumbotron">
+        <h1>About DOT</h1>
+        <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+            has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of
+            type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the
+            leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+            release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+            software like Aldus PageMaker including versions of Lorem Ipsum.It is a long established fact that a reader
+            will be distracted by the readable content of a page when looking at its layout. The point of using Lorem
+            Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here,
+            content here', making it look like readable English. Many desktop publishing packages and web page editors
+            now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites
+            still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on
+            purpose (injected humour and the like).
+
+        </p>
+    </div>
+{% endblock %}

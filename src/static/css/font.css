@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'Bitter';
+    src: url('../assets/fonts/Bitter/Bitter-Regular.woff2') format('woff2'),
+        url('../assets/fonts/Bitter/Bitter-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Lora';
+    src: url('../assets/fonts/Lora/Lora-Regular.woff2') format('woff2'),
+        url('../assets/fonts/Lora/Lora-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}

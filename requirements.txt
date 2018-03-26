@@ -1,0 +1,7 @@
+twilio==6.10.5
+Flask==0.12.2
+uuid==1.30
+pymongo==3.6.0
+passlib==1.7.1
+requests==2.18.4
+flask-restplus==0.10.1

@@ -1,0 +1,60 @@
+import uuid
+import src.models.users.constants as UserConstants
+from src.common.database import Database
+from src.common.utils import Utils
+from src.models.sim.sim import Sim
+from src.models.otp.otp import OTP
+import datetime
+
+
+class User:
+    def __init__(self,aadhaar_no, name, dob, address, mobile_no, gender,_id = None):
+        self.aadhaar_no = aadhaar_no
+        self.name = name
+        self.dob = datetime.datetime.strptime(dob,"%Y-%m-%d") if isinstance(dob, str) else dob
+        self.address = address
+        self.mobile_no = mobile_no
+        self.gender = gender
+        self._id = uuid.uuid4().hex if _id is None else _id
+
+    @classmethod
+    def get_by_id(cls, user_id):
+        data = Database.find_one(UserConstants.COLLECTIONS, {'_id':user_id})
+        return cls(**data) if data is not None else False
+
+    def json(self):
+        return {
+            'aadhaar_no':self.aadhaar_no,
+            'name':self.name,
+            'dob':self.dob.strftime("%Y-%m-%d"),
+            'address':self.address,
+            'mobile_no':self.mobile_no,
+            'gender':self.gender,
+            '_id':self._id
+        }
+
+    def save_to_db(self):
+        return Database.update(UserConstants.COLLECTIONS, {'_id': self._id}, self.json())
+
+    @classmethod
+    def list_all_user(cls):
+        cluster_data = Database.find(UserConstants.COLLECTIONS, {})
+        return [cls(**data) for data in cluster_data if data is not None] if cluster_data is not None else None
+
+
+    @classmethod
+    def get_by_aadhaar(cls, aadhaar_no):
+        data = Database.find_one(UserConstants.COLLECTIONS, {'aadhaar_no': aadhaar_no})
+        return cls(**data) if data is not None else False
+
+    def get_sim_details(self):
+        user_sims = Sim.get_by_aadhaar(self.aadhaar_no)
+        return user_sims
+
+    def send_otp(self):
+        otp = OTP(self._id)
+        if Utils.send_otp(otp.otp,self.mobile_no):
+            otp.save_to_db()
+            return otp
+        else:
+            return False

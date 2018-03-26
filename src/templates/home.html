@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% block header %}
+    <a class="navbar-brand" href="#">Department of Telecommunications Ministry of Communication</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse text-white" id="collapsibleNavbar">
+        <ul class="navbar-nav ml-auto">
+
+            {% if session['uid'] == None %}
+                <li class="nav-item">
+                    <a class="nav-link text-white btn btn-success" href="#">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Home</a>
+                </li>
+            {% else %}
+
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url_for('.redirect_to_dash') }}">To Dash</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white btn btn-danger" href="{{ url_for('.logout') }}">Logout</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+{% endblock %}
+{% block body %}
+    {% with success = get_flashed_messages(category_filter=["success"]) %}
+        {% if success %}
+            <div class="w-100 h-100 success">
+                <div class="warning-box-wrapper"></div>
+                <div class="warning-box bg-cherry-red-fade rounded alert p-0" role="alert">
+                    <div class="warning-box-header bg-cherry-red text-white text-center pt-2 pb-2 rounded-top">
+                        <h2><span class="fas fa-exclamation-circle"></span> Congratulations
+                            <button type="button" class="close p-2 pr-3 text-white" data-dismiss="alert"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                        </h2>
+                    </div>
+                    <div class="container warning-box-body">
+                        {% for message in success %}
+                            {{ message }}
+                            <div class="warning-box-footer">
+                                <button type="button" class="btn btn-primary float-right" data-toggle="modal"
+                                        data-target="#myModal" id="success">
+                                    Okay!
+                                </button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+    {% endwith %}
+
+    <div class="row ">
+        <div class="col-sm-12 col-md-12">
+            <div class="bg-warning text-center text-danger sriped font-weight-bold">Welcome to DOT</div>
+            <div class="bg-primary  text-white pl-2 font-weight-bold"> User Login</div>
+            <div class="bg-secondary text-right text-white sriped font-weight-bold">* Mandatory fields</div>
+        </div>
+    </div>
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6 mx-auto">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="mb-0">Login</h3>
+                            </div>
+                            <div class="card-body">
+                                <form class="form" role="form" autocomplete="on" id="formLogin" method="POST"
+                                      action="{{ url_for('.home') }}">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label for="aadhaar_no">Aadhaar Number<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control form-control-lg rounded"
+                                                   name="aadhaar_no" id="aadhaar_no" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-success btn-sm float-right"
+                                                id="btnLogin">Send OTP
+                                        </button>
+                                    </div>
+                                </form>
+                                {% if otp_status %}
+                                    <div class="modal fade" id="myModal">
+                                        <div class="modal-dialog">
+
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h2>Enter OTP<span class="text-danger">*</span></h2>
+                                                </div>
+
+                                                <div class="container">
+                                                    <form class="form" role="form" autocomplete="on" id="otpbox"
+                                                          method="post"
+                                                          action="{{ url_for('.authenticate_user', otp_id = otp_id) }}">
+                                                        <div class="form-group">
+                                                            <input type="text"
+                                                                   class="form-control form-control-lg rounded-0"
+                                                                   id="otp"
+                                                                   required="required" name="otp">
+                                                        </div>
+                                                        <div class="form-group modal-footer">
+                                                            <button type="submit"
+                                                                    class="btn btn-success float-right"
+                                                                    id="btnLogin">Login
+                                                            </button>
+                                                        </div>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}DOT's Dashboard{% endblock %}
+
+{% block header %}
+        <a class="navbar-brand" href="#">Department of Telecommunications Ministry of Communication</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse text-white" id="collapsibleNavbar">
+        <ul class="navbar-nav ml-auto">
+
+            {% if session['uid'] == None %}
+                <li class="nav-item">
+                    <a class="nav-link text-white btn btn-success" href="#">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Home</a>
+                </li>
+            {% else %}
+
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url_for('.redirect_to_dash') }}">To Dash</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white btn btn-danger" href="{{ url_for('.logout') }}">Logout</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="center-wrapper">
+        <div class="center-container">
+            <div class="panel panel-default border border-light bg-light">
+
+                <div class="panel-heading ">
+                    <h3 class="panel-title ">DOT LOGIN</h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form" action="{{ url_for('admin.login_user')}}" method="POST">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Username" name="username" type="text">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Password" name="password" type="password">
+                            </div>
+                            <input class="btn btn-lg btn-success btn-block" type="submit" value="Login">
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
