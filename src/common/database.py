@@ -17,7 +17,7 @@ class Database:
 
     @staticmethod
     def delete(collection, query):
-        Database._DATABASE[collection].remove(query)
+        return True if Database._DATABASE[collection].remove(query) else False
 
     @staticmethod
     def find(collection, query):

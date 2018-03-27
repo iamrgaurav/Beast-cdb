@@ -1,11 +1,10 @@
-from flask import render_template, request, flash,redirect, url_for,session,  jsonify
+from flask import render_template, request, flash,redirect, url_for,session
 
 from src.app import app
 from src.models.users.user import User
 from src.models.otp.otp import OTP
-from src.common.utils import Utils
-import jwt
-import datetime
+from src.common.Utility.utils import Utils
+
 
 @app.route('/', methods=['POST', 'GET'])
 def home():

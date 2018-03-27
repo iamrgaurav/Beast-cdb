@@ -1,16 +1,18 @@
 import uuid
-import src.models.sim.constants as SimConstants
-from src.common.database import Database
 import datetime
 
+import src.models.sim.constants as SimConstants
+
+from src.common.database import Database
+from src.common.Utility.Utility import CommonUtility as SimUtility
 
 class Sim:
     def __init__(self, aadhaar_no, sim_no, tsp, lsa, issue_date,_id=None):
         self._id = uuid.uuid4().hex if _id is None else _id
-        self.aadhaar_no = aadhaar_no
-        self.sim_no = sim_no
-        self.tsp = tsp
-        self.lsa = lsa
+        self.aadhaar_no = SimUtility.formating_aadhaar(aadhaar_no)
+        self.sim_no = SimUtility.formating_phone(sim_no)
+        self.tsp = SimUtility.formating_name(tsp)
+        self.lsa = SimUtility.formating_name(lsa)
         self.issue_date = datetime.datetime.strptime(issue_date,"%Y-%m-%d") if isinstance(issue_date, str) else issue_date
 
     def json(self):

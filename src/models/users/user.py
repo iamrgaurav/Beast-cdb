@@ -1,19 +1,25 @@
 import uuid
+import datetime
+
 import src.models.users.constants as UserConstants
-from src.common.database import Database
-from src.common.utils import Utils
+
+
 from src.models.sim.sim import Sim
 from src.models.otp.otp import OTP
-import datetime
+
+
+from src.common.database import Database
+from src.common.Utility.utils import Utils
+from src.common.Utility.Utility import CommonUtility as User_Utility
 
 
 class User:
     def __init__(self,aadhaar_no, name, dob, address, mobile_no, gender,_id = None):
-        self.aadhaar_no = aadhaar_no
-        self.name = name
+        self.aadhaar_no = User_Utility.formating_aadhaar(aadhaar_no)
+        self.name = User_Utility.formating_name(name)
         self.dob = datetime.datetime.strptime(dob,"%Y-%m-%d") if isinstance(dob, str) else dob
         self.address = address
-        self.mobile_no = mobile_no
+        self.mobile_no = User_Utility.formating_phone(mobile_no)
         self.gender = gender
         self._id = uuid.uuid4().hex if _id is None else _id
 

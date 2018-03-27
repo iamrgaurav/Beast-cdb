@@ -1,18 +1,24 @@
-from src.common.database import Database
-from src.common.utils import Utils
-import src.models.dot.constants as AdminConstants
-import src.models.dot.errors as Errors
 import uuid
 import datetime
+
+import src.models.dot.constants as AdminConstants
+import src.models.dot.errors as Errors
+
+from src.common.Utility.Utility import CommonUtility as DotUtility
+
+from src.common.database import Database
+from src.common.Utility.utils import Utils
+
+
 
 
 class Admin:
     def __init__(self, username, password, name, dob, privilages, title, _id=None):
-        self.username = username
+        self.username = username.strip()
         self.password = password
         self._id = uuid.uuid4().hex if _id is None else _id
-        self.name = name
-        self.dob = datetime.datetime.strptime(dob,"%Y-%m-%d") if isinstance(dob, str) else dob
+        self.name = DotUtility.formating_name(name)
+        self.dob = datetime.datetime.strptime(dob,"%x") if isinstance(dob, str) else dob
         self.privilages = privilages
         self.title = title
 
@@ -22,14 +28,14 @@ class Admin:
             'password':self.password,
             '_id':self._id,
             'name':self.name,
-            'dob':self.dob,
+            'dob':self.dob.strftime("%x"),
             'privilages':self.privilages,
             'title':self.title
         }
     @classmethod
     def get_by_id(cls, admin_id):
         data = Database.find_one(AdminConstants.COLLECTION, {'_id':admin_id})
-        return cls(**data) if data is not  None else False
+        return cls(**data) if data is not None else False
 
     def save_to_db(self):
         return Database.update(AdminConstants.COLLECTION, {'_id':self._id}, self.json())
