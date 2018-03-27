@@ -1,17 +1,36 @@
-from flask_restplus import Resource, Namespace,fields
+from flask_restplus import Resource, Namespace
 from flask import jsonify
 from flask import request
 
-from src.models.api.dot.Admin import AdminAPI
+from src.models.api.tsp.tsp import TSPApi
 
 TSP_namespace = Namespace('TSP','There are Various Operations regarding TSP')
 
 
-@admin_namespace.route('/')
+@TSP_namespace.route('/')
 class User_Info(Resource):
-    @user_namespace.doc(params={
-        'aadhaar_no': {'in': 'formData', 'description': 'User Aadhaar Number', 'required': 'True'}})
+    @TSP_namespace.doc(params={
+        'aadhaar_no': {'in': 'formData', 'description': 'User Aadhaar Number', 'required': 'True'},
+        'tsp': {'in': 'formData', 'description': 'TSP Name', 'required': 'True'}})
     def get(self):
         aadhaar = request.form['aadhaar_no']
-        sims = TSPApi.get_sims_by_aadhaar(aadhaar)
+        tsp = request.form['tsp']
+        sims = TSPApi.get_sims_by_aadhaar(aadhaar,tsp)
         return jsonify({"data": sims})
+
+    @TSP_namespace.doc(params={
+        'aadhaar_no': {'in': 'formData', 'description': 'User Aadhaar Number', 'required': 'True'},
+        'mobile_no':{'in': 'formData', 'description': 'User Phone Number in Format +91xxxxx-xxxxxx', 'required': 'True'},
+        'tsp':{'in': 'formData', 'description': 'Name of TSP', 'required': 'True'},
+        'issue_date':{'in': 'formData', 'description': 'Issue Date Time', 'required': 'True'},
+        'lsa':{'in': 'formData', 'description': 'LSA', 'required': 'True'},
+    })
+    def post(self):
+        mobile = request.form['mobile_no']
+        tsp = request.form['tsp']
+        issue_date = request.form['issue_date']
+        lsa = request.form['lsa']
+        aadhaar_no = request.form['aadhaar']
+        return 200 if TSPApi.save_sim(mobile,tsp,issue_date,lsa,aadhaar_no) else 400
+
+
