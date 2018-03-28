@@ -58,7 +58,7 @@ class User:
         return user_sims
 
     def send_otp(self):
-        otp = OTP(self._id)
+        otp = OTP(self.aadhaar_no)
         if Utils.send_otp(otp.otp,self.mobile_no):
             otp.save_to_db()
             return otp
