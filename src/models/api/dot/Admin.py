@@ -39,7 +39,7 @@ class AdminAPI:
         if admin.is_login_valid(username, password):
             return {'username': admin.username,
                     'name':admin.name,
-                    'dob':admin.dob,
+                    'dob':admin.dob.strftime("%Y-%m-%d"),
                     'privileges': admin.privileges
             }
         else:
