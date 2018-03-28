@@ -12,7 +12,7 @@ class User_Info(Resource):
     @TSP_namespace.doc(params={
         'aadhaar_no': {'in': 'formData', 'description': 'User Aadhaar Number', 'required': 'True'},
         'tsp': {'in': 'formData', 'description': 'TSP Name', 'required': 'True'}})
-    def get(self):
+    def post(self):
         aadhaar_no = request.form['aadhaar_no']
         tsp = request.form['tsp']
         return jsonify({'aadhaar':aadhaar_no,'tsp':tsp})
