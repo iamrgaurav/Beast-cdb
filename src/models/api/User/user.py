@@ -41,7 +41,7 @@ class UserAPI:
     @staticmethod
     def get_otp(aadhaar_no):
         otp = User.get_by_aadhaar(aadhaar_no).send_otp()
-        return {'otp': otp.otp, 'generation_time': otp.generation_time, '_id': otp._id, 'user_id': otp.user_id}
+        return {'otp': otp.otp, 'generation_time': otp.generation_time, '_id': otp._id, 'aadhaar_no': otp.aadhaar_no}
     @staticmethod
     def authenticate_user(otp_id, user_otp):
         otp = OTP.get_recent_otp(otp_id)
@@ -58,3 +58,4 @@ class UserAPI:
             }
         else:
             return None
+
