@@ -7,7 +7,7 @@ from src.models.api.tsp.tsp import TSPApi
 TSP_namespace = Namespace('TSP','There are Various Operations regarding TSP')
 
 
-@TSP_namespace.route('/')
+@TSP_namespace.route('/sim')
 class User_Info(Resource):
     @TSP_namespace.doc(params={
         'aadhaar_no': {'in': 'formData', 'description': 'User Aadhaar Number', 'required': 'True'},
