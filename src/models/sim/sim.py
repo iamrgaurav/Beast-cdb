@@ -38,17 +38,17 @@ class Sim:
 
     @staticmethod
     def get_sim_count_by_tsp(aadhaar):
-        cluster_data = Database.find(SimConstants.COLLECTIONS, {'aadhaar_no': aadhaar})
+        cluster_data = Sim.get_by_aadhaar(aadhaar)
         tsps = []
         for data in cluster_data:
-           tsps.append(data['tsp'])
+           tsps.append(data.tsp)
         tsps = list(set(tsps))
 
         sim_counts_by_tsp={}
         for tsp in tsps:
             count = 0
             for data in cluster_data:
-                if tsp==data['tsp']:
+                if tsp==data.tsp:
                     count += 1
             sim_counts_by_tsp[tsp]=count
         return sim_counts_by_tsp
