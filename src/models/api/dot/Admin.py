@@ -40,9 +40,8 @@ class AdminAPI:
             return {'username': admin.username,
                     'name':admin.name,
                     'dob':admin.dob,
-                    'privileges': admin.privilages
-
-
+                    'privileges': admin.privileges
             }
         else:
             return "No Valid User"
+
