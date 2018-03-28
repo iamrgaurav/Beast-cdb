@@ -15,7 +15,6 @@ class User_Info(Resource):
     def post(self):
         aadhaar_no = request.form['aadhaar_no']
         tsp = request.form['tsp']
-        return jsonify({'aadhaar':aadhaar_no,'tsp':tsp})
         sims = TSPApi.get_sims_by_aadhaar(aadhaar_no,tsp)
         return jsonify({"data": sims})
 @TSP_namespace.route('/')
