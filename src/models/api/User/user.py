@@ -48,7 +48,7 @@ class UserAPI:
         user = User.get_by_aadhaar(otp.aadhaar_no)
         if otp.otp == user_otp:
             return {
-                'aadhaar_no': user._id,
+                'aadhaar_no': user.aadhaar_no,
                 'name': user.name,
                 'dob': user.dob,
                 'gender': user.gender,
