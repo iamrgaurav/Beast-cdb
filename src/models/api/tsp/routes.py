@@ -18,7 +18,8 @@ class User_Info(Resource):
         return jsonify({'aadhaar':aadhaar_no,'tsp':tsp})
         #sims = TSPApi.get_sims_by_aadhaar(aadhaar_no,tsp)
         #return jsonify({"data": sims})
-
+@TSP_namespace.route('/')
+class User_Info_add(Resource):
     @TSP_namespace.doc(params={
         'aadhaar_no': {'in': 'formData', 'description': 'User Aadhaar Number', 'required': 'True'},
         'mobile_no':{'in': 'formData', 'description': 'User Phone Number in Format +91xxxxx-xxxxxx', 'required': 'True'},
