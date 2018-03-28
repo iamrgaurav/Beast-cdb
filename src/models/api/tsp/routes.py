@@ -13,9 +13,9 @@ class User_Info(Resource):
         'aadhaar_no': {'in': 'formData', 'description': 'User Aadhaar Number', 'required': 'True'},
         'tsp': {'in': 'formData', 'description': 'TSP Name', 'required': 'True'}})
     def get(self):
-        aadhaar = request.form['aadhaar_no']
+        aadhaar_no = request.form['aadhaar_no']
         tsp = request.form['tsp']
-        sims = TSPApi.get_sims_by_aadhaar(aadhaar,tsp)
+        sims = TSPApi.get_sims_by_aadhaar(aadhaar_no,tsp)
         return jsonify({"data": sims})
 
     @TSP_namespace.doc(params={
@@ -30,7 +30,8 @@ class User_Info(Resource):
         tsp = request.form['tsp']
         issue_date = request.form['issue_date']
         lsa = request.form['lsa']
-        aadhaar_no = request.form['aadhaar']
+        aadhaar_no = request.form['aadhaar_no']
         return 200 if TSPApi.save_sim(mobile,tsp,issue_date,lsa,aadhaar_no) else 400
+
 
 
