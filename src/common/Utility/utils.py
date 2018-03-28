@@ -40,3 +40,20 @@ class Utils:
         adhaar_validator = re.compile('^(([\d]{4}\ ){2}[\d]{4})|([\d]{12})$')
 
         return True if adhaar_validator.match(adhaar) else False
+    @staticmethod
+    def send_otp(otp, mobile_number):
+        payload = {
+            "authkey": "203412ABi6bldnL5t5aacbefc",
+            "message": "Your Verification Code is " + otp,
+            "sender": "OTPSMS",
+            "mobile": mobile_number,
+            "otp_length": len(otp),
+            "otp": otp,
+            "otp_expiry": "1440",
+            "template": "6",
+        }
+        url = 'http://control.msg91.com/api/sendotp.php'
+        # if requests.post(url, payload):
+        # return True
+
+        return True

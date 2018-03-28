@@ -27,6 +27,8 @@ class CommonUtility:
     def formating_phone(phone):
         f_phone = phone.strip()
         if Utils.is_phone_valid(f_phone):
+            if f_phone[0:3]=="+91":
+                return f_phone
             if f_phone[5]=="-":
                 f_phone = "+91"+f_phone[0:5]+f_phone[6:11]
             else:
@@ -34,4 +36,5 @@ class CommonUtility:
             return f_phone
         else:
             raise Errors.PhoneError("Phone Number must be of the format xxxxx-xxxxx or xxxxxxxxxx")
+
 
