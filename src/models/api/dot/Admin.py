@@ -44,4 +44,3 @@ class AdminAPI:
             }
         else:
             return "No Valid User"
-

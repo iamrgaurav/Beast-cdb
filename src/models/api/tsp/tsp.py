@@ -9,12 +9,12 @@ class TSPApi:
                 'sim': [{'lsa': sim.lsa,
                          'tsp': sim.tsp,
                          'mobile': sim.sim_no,
-                         'issue_date':sim.issue_date.strftime("%Y-%m-%d")
-                         } for sim in sims if tsp == sim.tsp]if sims is not None else 0,
-                'sims_by_other_tsp': Sim.get_sim_count_by_tsp(aadhaar)
+                         'issue_date': sim.issue_date.strftime("%Y-%m-%d")
+                         } for sim in sims if tsp == sim.tsp] if sims is not None else 0,
+                'sims_by_other_tsp': Sim.get_sim_count_by_tsp(aadhaar,tsp)
 
                 }
+
     @staticmethod
     def save_sim(mobile, tsp, issue_date, lsa, aadhaar_no):
-        return Sim(aadhaar_no,mobile,tsp,lsa,issue_date).save_to_db()
-
+        return Sim(aadhaar_no, mobile, tsp, lsa, issue_date).save_to_db()

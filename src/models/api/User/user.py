@@ -58,4 +58,3 @@ class UserAPI:
             }
         else:
             return None
-
