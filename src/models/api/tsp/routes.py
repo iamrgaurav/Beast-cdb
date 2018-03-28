@@ -15,8 +15,9 @@ class User_Info(Resource):
     def get(self):
         aadhaar_no = request.form['aadhaar_no']
         tsp = request.form['tsp']
-        sims = TSPApi.get_sims_by_aadhaar(aadhaar_no,tsp)
-        return jsonify({"data": sims})
+        return jsonify({'aadhaar':aadhaar_no,'tsp':tsp})
+        #sims = TSPApi.get_sims_by_aadhaar(aadhaar_no,tsp)
+        #return jsonify({"data": sims})
 
     @TSP_namespace.doc(params={
         'aadhaar_no': {'in': 'formData', 'description': 'User Aadhaar Number', 'required': 'True'},

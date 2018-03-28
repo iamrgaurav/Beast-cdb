@@ -8,7 +8,8 @@ class TSPApi:
         return {'aadhaar_no': aadhaar,
                 'sim': [{'lsa': sim.lsa,
                          'tsp': sim.tsp,
-                         'mobile': sim.sim_no
+                         'mobile': sim.sim_no,
+                         'issue_date':sim.issue_date.strftime("%Y-%m-$d")
                          } for sim in sims if tsp == sim.tsp],
                 'sims_by_other_tsp': Sim.get_sim_count_by_tsp()
 
@@ -17,3 +18,4 @@ class TSPApi:
     @staticmethod
     def save_sim(mobile, tsp, issue_date, lsa, aadhaar_no):
         return Sim(aadhaar_no,mobile,tsp,lsa,issue_date).save_to_db()
+
