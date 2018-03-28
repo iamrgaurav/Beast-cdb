@@ -45,7 +45,16 @@ class UserAPI:
     @staticmethod
     def authenticate_user(otp_id, user_otp):
         otp = OTP.get_recent_otp(otp_id)
+        user = User.get_by_aadhaar(otp.aadhaar_no)
         if otp.otp == user_otp:
-            return 200
+            return {
+                'aadhaar_no': user._id,
+                'name': user.name,
+                'dob': user.dob,
+                'gender': user.gender,
+                'address': user.address,
+                'mobile_no': user.mobile_no,
+                '_id': user._id
+            }
         else:
-            return 400
+            return None

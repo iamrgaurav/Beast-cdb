@@ -13,13 +13,13 @@ from src.common.Utility.utils import Utils
 
 
 class Admin:
-    def __init__(self, username, password, name, dob, privilages, title, _id=None):
+    def __init__(self, username, password, name, dob, privileges, title, _id=None):
         self.username = username.strip()
         self.password = password
         self._id = uuid.uuid4().hex if _id is None else _id
         self.name = DotUtility.formating_name(name)
-        self.dob = datetime.datetime.strptime(dob,"%x") if isinstance(dob, str) else dob
-        self.privilages = privilages
+        self.dob = datetime.datetime.strptime(dob,"%Y-%m-%d") if isinstance(dob, str) else dob
+        self.privileges = privileges
         self.title = title
 
     def json(self):
@@ -28,8 +28,8 @@ class Admin:
             'password':self.password,
             '_id':self._id,
             'name':self.name,
-            'dob':self.dob.strftime("%x"),
-            'privilages':self.privilages,
+            'dob':self.dob.strftime("%Y-%m-%d"),
+            'privileges':self.privileges,
             'title':self.title
         }
     @classmethod

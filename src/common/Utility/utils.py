@@ -1,6 +1,27 @@
 import re
+from passlib.hash import pbkdf2_sha512
 
 class Utils:
+    @staticmethod
+    def hash_password(password):
+        """
+        hashes a password using pbkdf2_sha512
+        :param password:The sha512 password from the login/register form
+        :return:A sha512->pdfk12 password encrypted password
+        """
+        return pbkdf2_sha512.encrypt(password)
+
+    @staticmethod
+    def check_hashed_password(password,hashed_password):
+        """
+        Checks the password the user sent matches tha password stored in the database
+        The password is encrypted more than the user's password at this stage
+        :param password: sha-512 hashed password
+        :param hashed_password: pbkadf2_sh512 encrypted passsword
+        :return: True if password matches false otherwise
+        """
+        return pbkdf2_sha512.verify(password,hashed_password)
+
     @staticmethod
     def allowed_file(filename):
         ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -40,6 +61,7 @@ class Utils:
         adhaar_validator = re.compile('^(([\d]{4}\ ){2}[\d]{4})|([\d]{12})$')
 
         return True if adhaar_validator.match(adhaar) else False
+
     @staticmethod
     def send_otp(otp, mobile_number):
         payload = {

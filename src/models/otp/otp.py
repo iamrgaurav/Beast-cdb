@@ -7,17 +7,17 @@ from src.common.database import Database
 
 
 class OTP:
-    def __init__(self, user_id, generation_time=None, otp=None,_id=None):
+    def __init__(self, aadhaar_no, generation_time=None, otp=None,_id=None):
         self._id=uuid.uuid4().hex if _id is None else _id
         self.otp = str(random.randint(100000, 999999)) if otp is None else otp
         self.generation_time = datetime.datetime.now()\
             if generation_time is None\
             else datetime.datetime.strptime(generation_time,"%c")
-        self.user_id = user_id
+        self.aadhaar_no = aadhaar_no
 
     def json(self):
         return {
-            'user_id': self.user_id,
+            'aadhaar_no': self.aadhaar_no,
             '_id': self._id,
             'otp': self.otp,
             'generation_time': self.generation_time.strftime("%c")

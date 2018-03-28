@@ -1,3 +1,4 @@
+
 from flask import render_template, request, flash,redirect, url_for,session
 
 from src.app import app
@@ -32,7 +33,6 @@ def authenticate_user(otp_id):
         otp_sent = OTP.get_recent_otp(otp_id)
         user = User.get_by_id(otp_sent.user_id)
         if int(user_otp)==int(otp_sent.otp):
-            #token = jwt.encode({'user_id':user._id, 'exp':datetime.datetime.now()+datetime.timedelta(minutes=3)},app.config['secret_key'])
             session['uid'] = user._id
             return redirect(url_for('.redirect_to_dash'))
         else:

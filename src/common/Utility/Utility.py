@@ -37,4 +37,3 @@ class CommonUtility:
         else:
             raise Errors.PhoneError("Phone Number must be of the format xxxxx-xxxxx or xxxxxxxxxx")
 
-

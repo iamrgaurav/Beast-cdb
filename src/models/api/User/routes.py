@@ -69,7 +69,7 @@ class Authorize(Resource):
     @user_namespace.response(200, "You are Authorize")
     def post(self, otp_id):
         user_otp = request.form['otp']
-        return UserAPI.authenticate_user(otp_id, user_otp)
+        return jsonify(UserAPI.authenticate_user(otp_id, user_otp))
 
 
 @user_namespace.route('/sim-registered/<string:user_id>')
