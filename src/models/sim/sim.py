@@ -37,17 +37,18 @@ class Sim:
         return [cls(**data) for data in cluster_data if data is not None] if cluster_data is not None else False
 
     @staticmethod
-    def get_sim_count_by_tsp():
-        cluster_data = Database.find(SimConstants.COLLECTIONS,{})
+    def get_sim_count_by_tsp(aadhaar):
+        cluster_data = Database.find(SimConstants.COLLECTIONS, {'aadhaar_no': aadhaar})
         tsps = []
         for data in cluster_data:
            tsps.append(data['tsp'])
         tsps = list(set(tsps))
+
         sim_counts_by_tsp={}
         for tsp in tsps:
             count = 0
             for data in cluster_data:
-                if tsp ==data['tsp']:
+                if tsp==data['tsp']:
                     count += 1
             sim_counts_by_tsp[tsp]=count
         return sim_counts_by_tsp
