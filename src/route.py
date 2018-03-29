@@ -39,7 +39,7 @@ def authenticate_user(otp_id):
 
 @app.route('/to-dash/redirecting')
 def redirect_to_dash():
-    if 'uid' in session.keys() and session['uid']==None:
+    if 'uid' not in session.keys() or session['uid']==None:
         return redirect(url_for('.home'))
     else:
         user_id = session['uid']
