@@ -60,4 +60,3 @@ def logout():
     session['uid'] = None
     del session['uid']
     return redirect(url_for('.home'))
-

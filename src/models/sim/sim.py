@@ -52,3 +52,8 @@ class Sim:
                     count += 1
             sim_counts_by_tsp[tsp]=count
         return sim_counts_by_tsp
+
+    @classmethod
+    def get_all_sim(cls):
+        cluster_data = Database.find_one(SimConstants.COLLECTIONS, {})
+        return [cls(**data) for data in cluster_data if data is not None]if cluster_data is not None else None

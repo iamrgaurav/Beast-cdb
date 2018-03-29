@@ -1,4 +1,4 @@
-from flask import Blueprint, request, session, redirect, url_for, render_template
+from flask import Blueprint, request, session, redirect, url_for, render_template, jsonify
 
 from src.models.dot.dot import Admin
 from src.models.dot.errors import AdminError
@@ -38,3 +38,17 @@ def redirect_to_dash():
         return redirect(url_for('home'))
     else:
         return redirect(url_for('.view_dashboard', user_id = session['uid']))
+
+@admin_blueprint.route('/sim')
+def total_sim():
+    sims = Admin.list_all_sims()
+    return jsonify({'data':
+        [{
+            'sr_no':str(i+1),
+            'sim_no':sims[i].sim_no,
+            'tsp':sims[i].tsp,
+            'lsa':sims[i].lsa,
+            'issue_date':"{}".format(sims[i].issue_date.strftime('%d/%m/%Y'))
+             }
+            for i in range(len(sims))]
+    })

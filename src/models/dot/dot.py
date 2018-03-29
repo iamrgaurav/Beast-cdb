@@ -8,8 +8,7 @@ from src.common.Utility.Utility import CommonUtility as DotUtility
 
 from src.common.database import Database
 from src.common.Utility.utils import Utils
-
-
+from src.models.sim.sim import Sim
 
 
 class Admin:
@@ -68,3 +67,8 @@ class Admin:
     def list_all_admin(cls):
         cluster_data = Database.find(AdminConstants.COLLECTION, {})
         return [cls(**data) for data in cluster_data if data is not None] if cluster_data is not None else None
+
+    @staticmethod
+    def list_all_sims():
+        sims = Sim.get_all_sim()
+        return sims
