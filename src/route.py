@@ -22,14 +22,14 @@ def home():
                 otp.save_to_db()
                 flash('One time password has been successfully Sent To Your Device', 'success')
                 otp_status = True
+                return render_template('home.html', otp_id=otp._id, otp_status=otp_status)
             else:
                 flash('There is some error', 'error')
+        return render_template('home.html')
     else:
         return redirect(url_for('redirect_to_dash'))
 
 
-        return render_template('home.html', otp_id=otp._id, otp_status=otp_status)
-    return render_template('home.html')
 
 @app.route('/authenticate-user/<otp_id>',methods= ["POST", "GET"])
 def authenticate_user(otp_id):
@@ -59,7 +59,6 @@ def logout():
     session['uid']=None
     del session['uid']
     return redirect(url_for('.home'))
-
 
 
 
