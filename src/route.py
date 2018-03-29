@@ -49,6 +49,7 @@ def redirect_to_dash():
 @app.route('/logout')
 def logout():
     session['uid']=None
+    sesion.clear()
     return redirect(url_for('.home'))
 
 
