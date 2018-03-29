@@ -11,7 +11,7 @@ class TSPApi:
                          'mobile': sim.sim_no,
                          'issue_date':sim.issue_date.strftime("%Y-%m-%d")
                          } for sim in sims if tsp == sim.tsp]if sims is not None else 0,
-                'sims_by_other_tsp': Sim.get_sim_count_by_tsp(aadhaar)
+                'sims_by_other_tsp': Sim.get_sim_count_by_tsp(aadhaar),
                 'Total Sim':len(sims)
                 }
     @staticmethod
