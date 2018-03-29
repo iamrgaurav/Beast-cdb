@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse text-white" id="collapsibleNavbar">
         <ul class="navbar-nav ml-auto">
 
-            {% if session['uid'] == None %}
+            {% if 'uid' not in session.keys() or session['uid'] == None %}
                 <li class="nav-item">
                     <a class="nav-link text-white btn btn-success" href="#">Login</a>
                 </li>
