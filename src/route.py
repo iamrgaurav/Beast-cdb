@@ -36,7 +36,7 @@ def authenticate_user(otp_id):
     if request.method == "POST":
         user_otp = request.form['otp']
         otp_sent = OTP.get_recent_otp(otp_id)
-        user = User.get_by_id(otp_sent.user_id)
+        user = User.get_by_aadhaar(otp_sent.aadhaar_no)
         if int(user_otp)==int(otp_sent.otp):
             session['uid'] = user._id
             return redirect(url_for('.redirect_to_dash'))
@@ -59,6 +59,7 @@ def logout():
     session['uid']=None
     del session['uid']
     return redirect(url_for('.home'))
+
 
 
 
