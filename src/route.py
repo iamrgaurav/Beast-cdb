@@ -2,9 +2,11 @@
 from flask import render_template, request, flash,redirect, url_for,session
 
 from src.app import app
+from src.common.database import Database
 from src.models.users.user import User
 from src.models.otp.otp import OTP
 from src.common.Utility.utils import Utils
+from src.models.users.constants import COLLECTIONS as UserCollection
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -43,13 +45,17 @@ def redirect_to_dash():
         return redirect(url_for('.home'))
     else:
         user_id = session['uid']
-        return redirect(url_for('users.view_dashboard', user_id=user_id ))
+        if Database.find_one(UserCollection,{'_id':user_id}):
+            return redirect(url_for('users.view_dashboard', user_id=user_id ))
+        else:
+            return redirect(url_for('admin.view_dashboard', user_id=user_id ))
 
 @app.route('/logout')
 def logout():
     session['uid']=None
     del session['uid']
     return redirect(url_for('.home'))
+
 
 
 
