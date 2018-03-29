@@ -11,10 +11,7 @@
 
             {% if "uid" not in session.keys() and session['uid'] == None %}
                 <li class="nav-item">
-                    <a class="nav-link text-white btn btn-success" href="#">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Home</a>
+                    <a class="nav-link text-white" href="{{ url_for('admin.home') }}">Home</a>
                 </li>
             {% else %}
 

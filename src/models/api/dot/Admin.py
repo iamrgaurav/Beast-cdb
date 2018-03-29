@@ -18,7 +18,7 @@ class AdminAPI:
 
     @staticmethod
     def create_new_user(username, password, name, dob, privileges, title):
-        return Admin(username=username, password=password, name=name, dob=dob, privilages=privileges, title=title).save_to_db()
+        return Admin(username=username, password=password, name=name, dob=dob, privileges=privileges, title=title).save_to_db()
 
     @staticmethod
     def get_admin_by_admin_id(user_id):
