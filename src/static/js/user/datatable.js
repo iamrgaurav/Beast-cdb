@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    console.log($.get('/user/sim'));
     $('#example').DataTable({
         "processing": true,
         "ajax": "/user/sim",
