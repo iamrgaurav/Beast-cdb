@@ -11,8 +11,9 @@ from src.models.users.constants import COLLECTIONS as UserCollection
 @app.route('/', methods=['POST', 'GET'])
 def home():
     if 'uid' not in session.keys() or session['uid'] == None:
-        otp_status = False
+
         if request.method == 'POST':
+            otp_status = False
             aadhaar_number = request.form['aadhaar_no']
             user = User.get_by_aadhaar(aadhaar_number)
             mobile_no = user.mobile_no
@@ -24,7 +25,7 @@ def home():
                 return render_template('home.html', otp_id=otp._id, otp_status=otp_status)
             else:
                 flash('There is some error', 'error')
-        return render_template('home.html', otp_status)
+        return render_template('home.html')
     else:
         return redirect(url_for('redirect_to_dash'))
 
