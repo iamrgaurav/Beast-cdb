@@ -7,7 +7,7 @@ admin_blueprint = Blueprint('admin', __name__)
 
 @admin_blueprint.route('/')
 def home():
-    return redirect(url_for('.redirect_to_dash'))
+    return render_template('dot/home.html')
 
 @admin_blueprint.route('/dashboard/<user_id>')
 def view_dashboard(user_id):
@@ -32,6 +32,6 @@ def login_user():
 @admin_blueprint.route('/to-dash/redirecting')
 def redirect_to_dash():
     if session['uid']==None:
-    	return render_template('dot/home.html')
+        return redirect(url_for('home'))
     else:
         return redirect(url_for('.view_dashboard', user_id = session['uid']))

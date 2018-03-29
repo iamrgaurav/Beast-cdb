@@ -9,22 +9,24 @@ from src.common.Utility.utils import Utils
 
 @app.route('/', methods=['POST', 'GET'])
 def home():
-    otp_status = False
-    if request.method == 'POST':
-        aadhaar_number = request.form['aadhaar_no']
-        user = User.get_by_aadhaar(aadhaar_number)
-        mobile_no = user.mobile_no
-        otp = OTP(user._id)
-        if Utils.send_otp(otp.otp,mobile_no):
-            otp.save_to_db()
-            flash('One time password has been successfully Sent To Your Device', 'success')
-            otp_status = True
-        else:
-            flash('There is some error', 'error')
+    if session['uid']==None:
+        otp_status = False
+        if request.method == 'POST':
+            aadhaar_number = request.form['aadhaar_no']
+            user = User.get_by_aadhaar(aadhaar_number)
+            mobile_no = user.mobile_no
+            otp = OTP(user._id)
+            if Utils.send_otp(otp.otp,mobile_no):
+                otp.save_to_db()
+                flash('One time password has been successfully Sent To Your Device', 'success')
+                otp_status = True
+            else:
+                flash('There is some error', 'error')
 
-        return render_template('home.html', otp_id=otp._id, otp_status=otp_status)
-    return render_template('home.html')
-
+            return render_template('home.html', otp_id=otp._id, otp_status=otp_status)
+        return render_template('home.html')
+    else:
+        return redirect(url_for('redirect_to_dash'))
 
 @app.route('/authenticate-user/<otp_id>',methods= ["POST", "GET"])
 def authenticate_user(otp_id):
@@ -44,12 +46,12 @@ def redirect_to_dash():
         return redirect(url_for('.home'))
     else:
         user_id = session['uid']
-        return redirect(url_for('users.view_dashboard', user_id = user_id ))
+        return redirect(url_for('users.view_dashboard', user_id=user_id ))
 
 @app.route('/logout')
 def logout():
     session['uid']=None
-    return redirect(url_for('home'))
+    return redirect(url_for('.home'))
 
 
 

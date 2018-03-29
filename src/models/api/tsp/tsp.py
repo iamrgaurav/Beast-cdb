@@ -18,4 +18,3 @@ class TSPApi:
     def save_sim(mobile, tsp, issue_date, lsa, aadhaar_no):
         return Sim(aadhaar_no,mobile,tsp,lsa,issue_date).save_to_db()
 
-
