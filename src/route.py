@@ -9,24 +9,21 @@ from src.common.Utility.utils import Utils
 
 @app.route('/', methods=['POST', 'GET'])
 def home():
-    if session['uid']==None:
-        otp_status = False
-        if request.method == 'POST':
-            aadhaar_number = request.form['aadhaar_no']
-            user = User.get_by_aadhaar(aadhaar_number)
-            mobile_no = user.mobile_no
-            otp = OTP(user._id)
-            if Utils.send_otp(otp.otp,mobile_no):
-                otp.save_to_db()
-                flash('One time password has been successfully Sent To Your Device', 'success')
-                otp_status = True
-            else:
-                flash('There is some error', 'error')
+    otp_status = False
+    if request.method == 'POST':
+        aadhaar_number = request.form['aadhaar_no']
+        user = User.get_by_aadhaar(aadhaar_number)
+        mobile_no = user.mobile_no
+        otp = OTP(user._id)
+        if Utils.send_otp(otp.otp,mobile_no):
+            otp.save_to_db()
+            flash('One time password has been successfully Sent To Your Device', 'success')
+            otp_status = True
+        else:
+            flash('There is some error', 'error')
 
-            return render_template('home.html', otp_id=otp._id, otp_status=otp_status)
-        return render_template('home.html')
-    else:
-        return redirect(url_for('redirect_to_dash'))
+        return render_template('home.html', otp_id=otp._id, otp_status=otp_status)
+    return render_template('home.html')
 
 @app.route('/authenticate-user/<otp_id>',methods= ["POST", "GET"])
 def authenticate_user(otp_id):
@@ -53,6 +50,7 @@ def logout():
     session['uid']=None
     del session['uid']
     return redirect(url_for('.home'))
+
 
 
 
