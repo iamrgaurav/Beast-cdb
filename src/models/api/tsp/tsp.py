@@ -28,13 +28,15 @@ class TSPApi:
             return Sim(aadhaar_no, mobile, tsp, lsa, issue_date).save_to_db()
         else:
             data = requests.post(fau, data={'aadhaar_no': aadhaar_no}).json()
-            user_info = {
-                'aadhaar_no': data['aadhaar'],
-                'name': data['name'],
-                'dob': data['dob'],
-                'address': data['address'],
-                'mobile_no': data['phone'],
-                'gender': data['gender']}
-            if User(**user_info).save_to_db():
-                return Sim(aadhaar_no, mobile, tsp, lsa, issue_date).save_to_db()
-
+            if data is not None:
+                user_info = {
+                    'aadhaar_no': data['aadhaar'],
+                    'name': data['name'],
+                    'dob': data['dob'],
+                    'address': data['address'],
+                    'mobile_no': data['phone'],
+                    'gender': data['gender']}
+                if User(**user_info).save_to_db():
+                    return Sim(aadhaar_no, mobile, tsp, lsa, issue_date).save_to_db()
+            else:
+                return {'msg':'There is No aadhaar existing in Adhaar Server'}
