@@ -23,7 +23,6 @@ def verify_token(token):
 
 @TSP_namespace.route('/sim')
 class User_Info(Resource):
-    @auth.login_required
     @TSP_namespace.doc(params={
         'aadhaar_no': {'in': 'formData', 'description': 'User Aadhaar Number', 'required': 'True'},
         'tsp': {'in': 'formData', 'description': 'TSP Name', 'required': 'True'}})
@@ -34,7 +33,6 @@ class User_Info(Resource):
         return jsonify({"data": sims})
 @TSP_namespace.route('/')
 class User_Info_add(Resource):
-    @auth.login_required
     @TSP_namespace.doc(params={
         'auth': {'in': 'header', 'description': 'Authentication key', 'required': 'True'},
         'aadhaar_no': {'in': 'formData', 'description': 'User Aadhaar Number', 'required': 'True'},
@@ -44,7 +42,6 @@ class User_Info_add(Resource):
         'lsa':{'in': 'formData', 'description': 'LSA', 'required': 'True'},
     })
     def post(self):
-        token = request.form['auth']
         mobile = request.form['mobile_no']
         tsp = request.form['tsp']
         issue_date = request.form['issue_date']
