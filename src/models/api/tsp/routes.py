@@ -21,7 +21,7 @@ class User_Info(Resource):
 class User_Info_add(Resource):
     @TSP_namespace.doc(params={
         'aadhaar_no': {'in': 'formData', 'description': 'User Aadhaar Number', 'required': 'True'},
-        'mobile_no':{'in': 'formData', 'description': 'User Phone Number in Format +91xxxxx-xxxxxx', 'required': 'True'},
+        'mobile_no':{'in': 'formData', 'description': 'User Phone Number in Format +91xxxxxxxxxxx', 'required': 'True'},
         'tsp':{'in': 'formData', 'description': 'Name of TSP', 'required': 'True'},
         'issue_date':{'in': 'formData', 'description': 'Issue Date Time', 'required': 'True'},
         'lsa':{'in': 'formData', 'description': 'LSA', 'required': 'True'},
@@ -32,7 +32,9 @@ class User_Info_add(Resource):
         issue_date = request.form['issue_date']
         lsa = request.form['lsa']
         aadhaar_no = request.form['aadhaar_no']
-        return 200 if TSPApi.save_sim(mobile,tsp,issue_date,lsa,aadhaar_no) else 400
+        return {"msg":"successful"}
+        #return 200 if TSPApi.save_sim(mobile,tsp,issue_date,lsa,aadhaar_no) else 400
+
 
 
 
