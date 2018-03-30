@@ -35,7 +35,7 @@ class UserAPI:
     @staticmethod
     def get_sims(user_id):
         sims = User.get_by_id(user_id).get_sim_details()
-        return [{'aadhaar':sim.aadhaar_no,'sim_no':sim.sim_no,'lsa':sim.lsa,'tsp':sim.lsa,'_id':sim._id}for sim in sims if sim is not None] if sims is not None else None
+        return [{'aadhaar':sim.aadhaar_no,'sim_no':sim.sim_no,'lsa':sim.lsa,'tsp':sim.tsp,'_id':sim._id}for sim in sims if sim is not None] if sims is not None else None
 
     @staticmethod
     def get_otp(aadhaar_no):
