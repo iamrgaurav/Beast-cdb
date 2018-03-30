@@ -1,14 +1,34 @@
 from flask_restplus import Resource, Namespace
-from flask import jsonify
+from flask import jsonify,g
 from flask import request
+from flask_httpauth import HTTPTokenAuth
 
 from src.models.api.tsp.tsp import TSPApi
 
 TSP_namespace = Namespace('TSP','There are Various Operations regarding TSP')
 
 
+auth = HTTPTokenAuth(scheme='Token')
+
+tokens = {
+    "67bb1790bdfb40bda2235314ae07f746": "Airtel",
+    "631a0009b2f34c10add11af4e66fbb17": "Idea"
+}
+
+@auth.verify_token
+def verify_token(token):
+    if token in tokens:
+        g.current_user = tokens[token]
+
+        return True
+    return False
+
+
+
 @TSP_namespace.route('/sim')
+@auth.login_required
 class User_Info(Resource):
+    @auth.login_required
     @TSP_namespace.doc(params={
         'aadhaar_no': {'in': 'formData', 'description': 'User Aadhaar Number', 'required': 'True'},
         'tsp': {'in': 'formData', 'description': 'TSP Name', 'required': 'True'}})
@@ -33,6 +53,7 @@ class User_Info_add(Resource):
         lsa = request.form['lsa']
         aadhaar_no = request.form['aadhaar_no']
         return 200 if TSPApi.save_sim(mobile,tsp,issue_date,lsa,aadhaar_no) else 400
+
 
 
 
