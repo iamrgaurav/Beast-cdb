@@ -28,7 +28,7 @@ class TSPApi:
             return Sim(aadhaar_no,mobile,tsp,lsa,issue_date).save_to_db()
         else:
             data = requests.post(fau, data={'aadhaar_no':aadhaar_no}).json()
-            if User(data['aadhaar'],data['name'],data['dob'],data['address'],data['phone'],data['gender']).save_to_db():
+            if User(data['aadhaar'], data['name'],data['dob'],data['address'],data['phone'],data['gender']).save_to_db():
                 return Sim(aadhaar_no, mobile, tsp, lsa, issue_date).save_to_db()
 
 
