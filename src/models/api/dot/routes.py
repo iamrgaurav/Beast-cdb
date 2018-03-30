@@ -2,10 +2,21 @@ from flask_restplus import Resource, Namespace,fields
 from flask import jsonify
 from flask import request
 
+from flask_httpauth import HTTPTokenAuth
+import src.models.api.guser as guser
 from src.models.api.dot.Admin import AdminAPI
 
 admin_namespace = Namespace('DOT Admin','There are Various Operations regarding Admin')
 
+auth = HTTPTokenAuth(scheme='Token')
+
+@auth.verify_token
+def verify_token(token):
+    if token in guser.tokens:
+        g.current_user = guser.tokens[token]
+
+        return True
+    return False
 
 
 admin_model = admin_namespace.model('Admin', {
@@ -20,6 +31,7 @@ admin_model = admin_namespace.model('Admin', {
 
 @admin_namespace.route('/')
 class ListUser(Resource):
+    @auth.login_required
     def get(self):
         users = AdminAPI.get_all_admin()
         return jsonify({"data": users})
@@ -34,6 +46,7 @@ class ListUser(Resource):
         'privileges': {'in': 'formData', 'description': 'User Privileges', 'required': 'True'},
         'title': {'in': 'formData', 'description': 'User Title', 'required': 'True'},
     })
+    @auth.login_required
     def post(self):
         username = request.form['username']
         name = request.form['name']

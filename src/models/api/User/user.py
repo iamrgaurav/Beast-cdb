@@ -2,7 +2,6 @@ from src.models.users.user import User
 from src.models.otp.otp import OTP
 
 class UserAPI:
-
     @staticmethod
     def get_all_user():
         users = User.list_all_user()
