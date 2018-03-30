@@ -77,6 +77,7 @@ class Utils:
             "template": "6",
         }
         url = 'http://control.msg91.com/api/sendotp.php'
-        if requests.post(url, payload):
-            return True
+        #if requests.post(url, payload):
+        #    return True
+        return True
 
