@@ -1,4 +1,10 @@
+import datetime
+
+import requests
+
 from src.models.sim.sim import Sim
+from src.config import fake_aadhaar_url as fau
+from src.models.users.user import User
 
 
 class TSPApi:
@@ -15,6 +21,13 @@ class TSPApi:
                 'Total_Sim':len(sims)
                 }
     @staticmethod
+
     def save_sim(mobile, tsp, issue_date, lsa, aadhaar_no):
-        return Sim(aadhaar_no,mobile,tsp,lsa,issue_date).save_to_db()
+        user = User.get_by_aadhaar(aadhaar_no)
+        if user:
+            return Sim(aadhaar_no,mobile,tsp,lsa,issue_date).save_to_db()
+        else:
+            data = requests.post(fau, data={'aadhaar_no':aadhaar_no})
+            if User(data['aadhaar'],data['name'],data['dob'],data['address'],data['phone'],data['gender']).save_to_db():
+                return Sim(aadhaar_no, mobile, tsp, lsa, issue_date).save_to_db()
 
