@@ -39,4 +39,4 @@ class TSPApi:
                 if User(**user_info).save_to_db():
                     return Sim(aadhaar_no, mobile, tsp, lsa, issue_date).save_to_db()
             else:
-                return {'msg':'There is No aadhaar existing in Adhaar Server'}
+                return None
