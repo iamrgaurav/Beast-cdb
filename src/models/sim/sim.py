@@ -22,7 +22,7 @@ class Sim:
             'aadhaar_no': self.aadhaar_no,
             'tsp': self.tsp,
             'lsa': self.lsa,
-            'issue_date': self.issue_date
+            'issue_date': self.issue_date.strftime("%Y-%m-%d")
         }
 
     def save_to_db(self):
