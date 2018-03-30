@@ -36,6 +36,7 @@ class User_Info(Resource):
 class User_Info_add(Resource):
     @auth.login_required
     @TSP_namespace.doc(params={
+        'auth': {'in': 'header', 'description': 'Authentication key', 'required': 'True'},
         'aadhaar_no': {'in': 'formData', 'description': 'User Aadhaar Number', 'required': 'True'},
         'mobile_no':{'in': 'formData', 'description': 'User Phone Number in Format +91xxxxxxxxxxx', 'required': 'True'},
         'tsp':{'in': 'formData', 'description': 'Name of TSP', 'required': 'True'},
@@ -43,6 +44,7 @@ class User_Info_add(Resource):
         'lsa':{'in': 'formData', 'description': 'LSA', 'required': 'True'},
     })
     def post(self):
+        token = request.form['auth']
         mobile = request.form['mobile_no']
         tsp = request.form['tsp']
         issue_date = request.form['issue_date']
