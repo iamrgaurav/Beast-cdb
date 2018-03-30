@@ -36,7 +36,7 @@ class User_Info(Resource):
 class User_Info_add(Resource):
     @auth.login_required
     @TSP_namespace.doc(params={
-        'auth': {'in': 'header', 'description': 'Authentication key', 'required': 'True'},
+        'auth': {'in': 'header', 'description': 'User Aadhaar Number', 'required': 'True'},
         'aadhaar_no': {'in': 'formData', 'description': 'User Aadhaar Number', 'required': 'True'},
         'mobile_no':{'in': 'formData', 'description': 'User Phone Number in Format +91xxxxxxxxxxx', 'required': 'True'},
         'tsp':{'in': 'formData', 'description': 'Name of TSP', 'required': 'True'},

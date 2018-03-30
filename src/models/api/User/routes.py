@@ -29,7 +29,6 @@ user_model = user_namespace.model('User', {
 
 @user_namespace.route('/')
 class ListUser(Resource):
-    @auth.login_required
     def get(self):
         users = UserAPI.get_all_user()
         return jsonify({"data": users})
@@ -44,7 +43,6 @@ class ListUser(Resource):
         'mobile_no': {'in': 'formData', 'description': 'User Mobile Number', 'required': 'True'},
         'gender': {'in': 'formData', 'description': 'User Gender', 'required': 'True'},
     })
-    @auth.login_required
     def post(self):
         aadhaar_no = request.form['aadhaar_no']
         name = request.form['name']
@@ -61,14 +59,12 @@ class ListUser(Resource):
 
 @user_namespace.route('/<string:user_id>')
 class SingleUser(Resource):
-    @auth.login_required
     def get(self, user_id):
         return jsonify(UserAPI.get_user_by_user_id(user_id))
 
 
 @user_namespace.route('/login')
 class SendOTPtoUser(Resource):
-    @auth.login_required
     @user_namespace.doc(params={
         'aadhaar_no': {'in': 'formData', 'description': 'User Aadhaar Number', 'required': 'True'}})
     def post(self):
@@ -78,7 +74,6 @@ class SendOTPtoUser(Resource):
 
 @user_namespace.route('/verify-otp/<string:otp_id>')
 class Authorize(Resource):
-    @auth.login_required
     @user_namespace.doc(params={
         'otp': {'in': 'formData', 'description': 'OTP Sent To User', 'required': 'True'}})
     @user_namespace.response(200, "You are Authorize")
@@ -89,6 +84,5 @@ class Authorize(Resource):
 
 @user_namespace.route('/sim-registered/<string:user_id>')
 class UserSims(Resource):
-    @auth.login_required
     def get(self, user_id):
         return jsonify({'data': UserAPI.get_sims(user_id)})

@@ -31,7 +31,6 @@ admin_model = admin_namespace.model('Admin', {
 
 @admin_namespace.route('/')
 class ListUser(Resource):
-    @auth.login_required
     def get(self):
         users = AdminAPI.get_all_admin()
         return jsonify({"data": users})
@@ -46,7 +45,6 @@ class ListUser(Resource):
         'privileges': {'in': 'formData', 'description': 'User Privileges', 'required': 'True'},
         'title': {'in': 'formData', 'description': 'User Title', 'required': 'True'},
     })
-    @auth.login_required
     def post(self):
         username = request.form['username']
         name = request.form['name']
