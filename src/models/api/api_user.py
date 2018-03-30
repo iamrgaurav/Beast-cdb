@@ -8,6 +8,7 @@ import src.models.api.config as APIConfig
 import src.models.api.errors as Errors
 
 
+
 class Api_User:
     def __init__(self,username,password,type,_id=None):
         self.username=username

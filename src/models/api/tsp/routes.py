@@ -2,7 +2,7 @@ from flask_restplus import Resource, Namespace
 from flask import jsonify,g
 from flask import request
 from flask_httpauth import HTTPTokenAuth
-
+import src.models.api.guser as guser
 from src.models.api.tsp.tsp import TSPApi
 
 TSP_namespace = Namespace('TSP','There are Various Operations regarding TSP')
@@ -10,15 +10,11 @@ TSP_namespace = Namespace('TSP','There are Various Operations regarding TSP')
 
 auth = HTTPTokenAuth(scheme='Token')
 
-tokens = {
-    "67bb1790bdfb40bda2235314ae07f746": "Airtel",
-    "631a0009b2f34c10add11af4e66fbb17": "Idea"
-}
 
 @auth.verify_token
 def verify_token(token):
-    if token in tokens:
-        g.current_user = tokens[token]
+    if token in guser.tokens:
+        g.current_user = guser.tokens[token]
 
         return True
     return False
@@ -38,6 +34,7 @@ class User_Info(Resource):
         return jsonify({"data": sims})
 @TSP_namespace.route('/')
 class User_Info_add(Resource):
+    @auth.login_required
     @TSP_namespace.doc(params={
         'aadhaar_no': {'in': 'formData', 'description': 'User Aadhaar Number', 'required': 'True'},
         'mobile_no':{'in': 'formData', 'description': 'User Phone Number in Format +91xxxxxxxxxxx', 'required': 'True'},
