@@ -55,5 +55,5 @@ class Sim:
 
     @classmethod
     def get_all_sim(cls):
-        cluster_data = Database.find_one(SimConstants.COLLECTIONS, {})
+        cluster_data = Database.find(SimConstants.COLLECTIONS, {})
         return [cls(**data) for data in cluster_data if data is not None]if cluster_data is not None else None
