@@ -52,7 +52,8 @@ class UserAPI:
                 'dob': user.dob,
                 'gender': user.gender,
                 'address': user.address,
-                'mobile_no': user.mobile_no
+                'mobile_no': user.mobile_no,
+                "_id":user._id
             }
         else:
             return None
