@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, session, jsonify
-import datetime
 from src.models.users.user import User
 user_blueprint = Blueprint('users', __name__)
 @user_blueprint.route('/dashboard/<user_id>')

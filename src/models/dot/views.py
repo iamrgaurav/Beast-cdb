@@ -39,16 +39,3 @@ def redirect_to_dash():
     else:
         return redirect(url_for('.view_dashboard', user_id = session['uid']))
 
-@admin_blueprint.route('/sim')
-def total_sim():
-    sims = Admin.list_all_sims()
-    return jsonify({'data':
-        [{
-            'sr_no':str(i+1),
-            'sim_no':sims[i].sim_no,
-            'tsp':sims[i].tsp,
-            'lsa':sims[i].lsa,
-            'issue_date':"{}".format(sims[i].issue_date.strftime('%d/%m/%Y'))
-             }
-            for i in range(len(sims))]
-    })

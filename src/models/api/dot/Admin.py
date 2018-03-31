@@ -1,5 +1,6 @@
 from src.models.dot.dot import Admin
 from flask import jsonify
+from src.models.sim.sim import Sim
 
 class AdminAPI:
     @staticmethod
@@ -44,4 +45,12 @@ class AdminAPI:
             }
         else:
             return "No Valid User"
+    @staticmethod
+    def gets_user_by_count(count):
+        return Sim.list_by_count(count)
+
+    @staticmethod
+    def list_users_by_count(count):
+        return Sim.get_sim_count_by_tsp(count)
+
 

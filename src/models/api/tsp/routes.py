@@ -21,6 +21,7 @@ def verify_token(token):
 
 
 
+@auth.login_required
 @TSP_namespace.route('/sim')
 class User_Info(Resource):
     @TSP_namespace.doc(params={

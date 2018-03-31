@@ -40,7 +40,8 @@ def authenticate_user(otp_id):
             session['uid'] = user._id
             return redirect(url_for('.redirect_to_dash'))
         else:
-            raise ValueError("Incorrect OTP")
+            OTP.remove_from_db(otp_id)
+            return
 
 
 @app.route('/to-dash/redirecting')
