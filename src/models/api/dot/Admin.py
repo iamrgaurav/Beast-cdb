@@ -49,7 +49,7 @@ class AdminAPI:
         return Sim.list_by_count(count)
 
     @staticmethod
-    def list_users_by_count(count):
-        return Sim.get_sim_count_by_tsp(count)
+    def list_users_by_lsa(lsa):
+        return Sim.list_by_lsa(lsa)
 
 

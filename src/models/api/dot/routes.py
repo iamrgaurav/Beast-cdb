@@ -86,15 +86,23 @@ class Authorize(Resource):
             'count': {'in': 'formData', 'description': 'The no of count you want to query', 'required': 'True'}})
         def post(self):
             count = request.form['count']
-            return AdminAPI.gets_user_by_count(count), 200
+            datas = AdminAPI.gets_user_by_count(count)
+            return {"msg":"successful",
+                "data":[{'aadhaar': key, 'count': datas[key]} for key in datas.keys()]} if datas is not None or False else {'msg':'No User'}
+
 
     @admin_namespace.route('/list-by-lsa')
-    class ListSimCount(Resource):
+    class ListSimlsa(Resource):
         @admin_namespace.doc(params={
             'lsa': {'in': 'formData', 'description': 'Local Service Area', 'required': 'True'}})
         def post(self):
-            count = request.form['lsa']
-            return AdminAPI.gets_user_by_count(count), 200
+            lsa = request.form['lsa']
+            datas = AdminAPI.list_users_by_lsa(lsa)
+            return {"msg": "successful",
+                    "data": [{'aadhaar': key, 'count': datas[key]} for key in
+                             datas.keys()]} if datas is not None or False else {'msg': 'No User'}
+
+
 
 
 
