@@ -96,17 +96,6 @@ class Authorize(Resource):
             count = request.form['lsa']
             return AdminAPI.gets_user_by_count(count), 200
 
-    @admin_namespace.route('/delete')
-    class ListSimCount(Resource):
-        @admin_namespace.doc(params={
-            'aadhaar': {'in': 'formData', 'description': 'Aadhaar', 'required': 'True'},
-            '': {'in': 'formData', 'description': 'Aadhaar', 'required': 'True'}
-
-        })
-        def post(self):
-            count = request.form['lsa']
-            return AdminAPI.gets_user_by_count(count), 200
-
 
 
 
