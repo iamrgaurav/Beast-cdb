@@ -6,7 +6,6 @@ class UserAPI:
     def get_all_user():
         users = User.list_all_user()
         return [{
-            '_id': user._id,
             'aadhaar_no': user.aadhaar_no,
             'name': user.name,
             'dob': user.dob,
@@ -28,8 +27,7 @@ class UserAPI:
             'dob':user.dob,
             'gender':user.gender,
             'address':user.address,
-            'mobile_no':user.mobile_no,
-            '_id':user_id
+            'mobile_no':user.mobile_no
                 }
 
     @staticmethod
@@ -52,8 +50,7 @@ class UserAPI:
                 'dob': user.dob,
                 'gender': user.gender,
                 'address': user.address,
-                'mobile_no': user.mobile_no,
-                '_id': user._id
+                'mobile_no': user.mobile_no
             }
         else:
             return None

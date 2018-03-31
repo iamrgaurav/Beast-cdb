@@ -1,5 +1,4 @@
 from src.models.dot.dot import Admin
-from flask import jsonify
 from src.models.sim.sim import Sim
 
 class AdminAPI:

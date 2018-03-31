@@ -83,7 +83,7 @@ class Authorize(Resource):
     @admin_namespace.route('/list')
     class ListResource(Resource):
         @admin_namespace.doc(params={
-            'count': {'in': 'formData', 'description': 'Username of Dot Admin', 'required': 'True'}})
+            'count': {'in': 'formData', 'description': 'The no of count you want to query', 'required': 'True'}})
         def post(self):
             count = request.form['count']
             return AdminAPI.gets_user_by_count(count), 200

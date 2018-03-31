@@ -1,5 +1,3 @@
-import datetime
-
 import requests
 
 from src.models.sim.sim import Sim

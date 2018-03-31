@@ -59,15 +59,18 @@ class Sim:
         return [cls(**data) for data in cluster_data if data is not None]if cluster_data is not None else None
 
     @classmethod
-    def list_by_count(cls):
+    def list_by_count(cls,count):
         sims = cls.get_all_sim()
         aadhaars = []
         for sim in sims:
             aadhaars.append(sim.aadhaar_no)
-        aadhaar = list[set(aadhaars)]
+        aadhaar = list(set(aadhaars))
         data = {}
         for aadhaar in aadhaar:
             count = Database.count('sim',{'aadhaar_no':aadhaar})
             data[aadhaar]= count
+        for key in data.keys():
+            if data[key]<count:
+                del data[key]
         return data
 

@@ -70,5 +70,4 @@ class Admin:
 
     @staticmethod
     def list_all_sims():
-        sims = Sim.get_all_sim()
-        return sims
+        return Sim.get_all_sim()

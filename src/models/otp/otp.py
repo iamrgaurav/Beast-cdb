@@ -10,7 +10,7 @@ class OTP:
     def __init__(self, aadhaar_no, generation_time=None, otp=None,_id=None):
         self._id=uuid.uuid4().hex if _id is None else _id
         self.otp = str(random.randint(100000, 999999)) if otp is None else otp
-        self.generation_time = datetime.datetime.now()\
+        self.generation_time = datetime.datetime.utcnow()\
             if generation_time is None\
             else datetime.datetime.strptime(generation_time,"%c")
         self.aadhaar_no = aadhaar_no
