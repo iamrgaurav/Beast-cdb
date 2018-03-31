@@ -67,9 +67,11 @@ class Sim:
         aadhaars = list(set(aadhaars))
         data = {}
         for aadhaar in aadhaars:
+            count=0
             count = Database.count('sim',{'aadhaar_no':aadhaar})
             data[aadhaar]= count
-        for key in data.keys()[:]:
+        keys = list(data.keys())
+        for key in keys:
             if data[key]<count:
                 del data[key]
         return data
