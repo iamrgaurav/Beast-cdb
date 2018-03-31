@@ -64,12 +64,12 @@ class Sim:
         aadhaars = []
         for sim in sims:
             aadhaars.append(sim.aadhaar_no)
-        aadhaar = list(set(aadhaars))
+        aadhaars = list(set(aadhaars))
         data = {}
-        for aadhaar in aadhaar:
+        for aadhaar in aadhaars:
             count = Database.count('sim',{'aadhaar_no':aadhaar})
             data[aadhaar]= count
-        for key in data.keys():
+        for key in data.keys()[:]:
             if data[key]<count:
                 del data[key]
         return data
