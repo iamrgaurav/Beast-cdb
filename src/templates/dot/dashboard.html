@@ -8,18 +8,9 @@
     <!-- Navbar links -->
     <div class="collapse navbar-collapse text-white" id="collapsibleNavbar">
         <ul class="navbar-nav ml-auto">
-            {% if session['uid'] == None %}
-                <li class="nav-item">
-                    <a class="nav-link text-white btn btn-success" href="#">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Home</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link text-white btn btn-danger" href="{{ url_for('logout') }}">Logout</a>
-                </li>
-            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link text-white btn btn-danger" href="{{ url_for('logout') }}">Logout</a>
+            </li>
         </ul>
     </div>
 {% endblock %}
