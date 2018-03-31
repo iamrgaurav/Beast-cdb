@@ -68,11 +68,19 @@ class Sim:
         data = {}
         for aadhaar in aadhaars:
             count=0
-            count = Database.count('sim',{'aadhaar_no':{aadhaar}})
+            count = Database.count('sim',{'aadhaar_no':aadhaar})
             data[aadhaar]= count
         keys = list(data.keys())
         for key in aadhaars:
             if data[key]<int(scount):
                 del data[key]
         return data
+
+    @classmethod
+    def list_by_lsa(cls):
+        sims = cls.get_all_sim()
+        aadhaars = []
+        for sim in sims:
+            aadhaars.append(sim.lsa)
+            aadhaars = list(set(aadhaars))
 

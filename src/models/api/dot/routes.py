@@ -1,5 +1,5 @@
 from flask_restplus import Resource, Namespace,fields
-from flask import jsonify
+from flask import jsonify, g
 from flask import request
 
 from flask_httpauth import HTTPTokenAuth
