@@ -1,3 +1,5 @@
+import datetime
+
 from flask_restplus import Resource, Namespace
 from flask import jsonify,g
 from flask import request
@@ -49,7 +51,29 @@ class User_Info_add(Resource):
         aadhaar_no = request.form['aadhaar_no']
         return 200 if TSPApi.save_sim(mobile,tsp,issue_date,lsa,aadhaar_no) else 400
 
+@TSP_namespace.route('/')
+class User_Info_add(Resource):
+    @TSP_namespace.doc(params={
+        'aadhaar_no': {'in': 'formData', 'description': 'User Aadhaar Number', 'required': 'True'},
+        'mobile_no':{'in': 'formData', 'description': 'User Phone Number in Format +91xxxxxxxxxxx', 'required': 'True'},
 
+    })
+    def post(self):
+        mobile = request.form['mobile_no']
+        tsp = request.form['tsp']
+        issue_date = datetime.datetime.now().strftime("%Y-%m-%d")
+        lsa = request.form['lsa']
+        aadhaar_no = request.form['aadhaar_no']
+        return 200 if TSPApi.save_sim(mobile,tsp,issue_date,lsa,aadhaar_no) else 400
 
+@TSP_namespace.route('/delete')
+class DelSimCount(Resource):
+    @TSP_namespace.doc(params={
+        'aadhaar': {'in': 'formData', 'description': 'Aadhaar', 'required': 'True'},
+        'phone': {'in': 'formData', 'description': 'Phone Numbe', 'required': 'True'}})
+    def post(self):
+        aadhaar = request.form['aadhaar']
+        phone = request.form['phone']
+        return {'msg':'successful'}, 200 if TSPApi.del_user(aadhaar,phone) else {'msg':'Failed'}, 400
 
 

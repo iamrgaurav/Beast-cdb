@@ -38,3 +38,7 @@ class TSPApi:
                     return Sim(aadhaar_no, mobile, tsp, lsa, issue_date).save_to_db()
             else:
                 return None
+
+    @classmethod
+    def del_user(cls, aadhaar, phone):
+        return Sim.del_by_tsp(aadhaar,phone)
