@@ -7,14 +7,14 @@ from src.common.database import Database
 from src.common.Utility.Utility import CommonUtility as SimUtility
 
 class Sim:
-    def __init__(self, aadhaar_no, sim_no, tsp, lsa, issue_date ,status=1, _id=None):
+    def __init__(self, aadhaar_no, sim_no, tsp, lsa, issue_date, _id=None):
         self._id = uuid.uuid4().hex if _id is None else _id
         self.aadhaar_no = SimUtility.formating_aadhaar(aadhaar_no)
         self.sim_no = SimUtility.formating_phone(sim_no)
         self.tsp = SimUtility.formating_name(tsp)
         self.lsa = SimUtility.formating_name(lsa)
         self.issue_date = datetime.datetime.strptime(issue_date,"%Y-%m-%d") if isinstance(issue_date, str) else issue_date
-        self.status = status
+
     def json(self):
         return {
             '_id': self._id,
@@ -22,7 +22,6 @@ class Sim:
             'aadhaar_no': self.aadhaar_no,
             'tsp': self.tsp,
             'lsa': self.lsa,
-            'status':self.status,
             'issue_date': self.issue_date.strftime("%Y-%m-%d")
         }
 
@@ -31,7 +30,7 @@ class Sim:
 
     @classmethod
     def get_by_aadhaar(cls, aadhaar_no):
-        cluster_data = Database.find(SimConstants.COLLECTIONS, {'aadhaar_no': aadhaar_no,'status':1})
+        cluster_data = Database.find(SimConstants.COLLECTIONS, {'aadhaar_no': aadhaar_no})
         return [cls(**data) for data in cluster_data if data is not None] if cluster_data is not None else False
 
     @staticmethod
@@ -53,7 +52,7 @@ class Sim:
 
     @classmethod
     def get_all_sim(cls):
-        cluster_data = Database.find(SimConstants.COLLECTIONS, {"status":1})
+        cluster_data = Database.find(SimConstants.COLLECTIONS, {})
         return [cls(**data) for data in cluster_data if data is not None]if cluster_data is not None else None
 
     @classmethod
@@ -70,7 +69,7 @@ class Sim:
         aadhaars = list(set(aadhaars))
         data = {}
         for aadhaar in aadhaars:
-            count = Database.count(SimConstants.COLLECTIONS,{'aadhaar_no':aadhaar, 'status':1})
+            count = Database.count(SimConstants.COLLECTIONS,{'aadhaar_no':aadhaar })
             data[aadhaar]= count
         keys = list(data.keys())
         for key in aadhaars:
@@ -87,11 +86,11 @@ class Sim:
         aadhaars = list(set(aadhaars))
         data = {}
         for aadhaar in aadhaars:
-            count = Database.count(SimConstants.COLLECTIONS, {'aadhar_no': aadhaar,'status':1})
+            count = Database.count(SimConstants.COLLECTIONS, {'aadhar_no': aadhaar})
             data[aadhaar] = count
 
         return data
 
     @classmethod
     def del_by_tsp(cls,aadhaar,phone):
-        return Database.update(SimConstants.COLLECTIONS, {'aadhaar_no':aadhaar,'status':0,'sim_no':phone})
+        return Database.update(SimConstants.COLLECTIONS, {'aadhaar_no':aadhaar,'sim_no':phone})
