@@ -70,7 +70,7 @@ class User_Info_add(Resource):
 class DelSimCount(Resource):
     @TSP_namespace.doc(params={
         'aadhaar': {'in': 'formData', 'description': 'Aadhaar', 'required': 'True'},
-        'phone': {'in': 'formData', 'description': 'Phone Numbe', 'required': 'True'}})
+        'phone': {'in': 'formData', 'description': 'Phone Number', 'required': 'True'}})
     def post(self):
         aadhaar = request.form['aadhaar']
         phone = request.form['phone']
