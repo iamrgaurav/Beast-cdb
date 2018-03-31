@@ -1,5 +1,5 @@
-from flask_restplus import Resource, Namespace, fields, reqparse
-from flask import jsonify, request
+from flask_restplus import Resource, Namespace, fields
+from flask import jsonify, request, g
 
 from src.models.api.User.user import UserAPI
 
