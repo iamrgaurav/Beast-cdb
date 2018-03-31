@@ -9,9 +9,12 @@
     <div class="collapse navbar-collapse text-white" id="collapsibleNavbar">
         <ul class="navbar-nav ml-auto">
 
-            {% if "uid" not in session.keys() or session['uid'] == None %}
+            {% if session['uid'] == None %}
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ url_for('admin.home') }}">Home</a>
+                    <a class="nav-link text-white btn btn-success" href="#">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Home</a>
                 </li>
             {% else %}
 
@@ -19,7 +22,7 @@
                     <a class="nav-link text-white" href="{{ url_for('.redirect_to_dash') }}">To Dash</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white btn btn-danger" href="{{ url_for('logout') }}">Logout</a>
+                    <a class="nav-link text-white btn btn-danger" href="{{ url_for('.logout') }}">Logout</a>
                 </li>
             {% endif %}
         </ul>
