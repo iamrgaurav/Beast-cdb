@@ -6,6 +6,7 @@ class UserAPI:
     def get_all_user():
         users = User.list_all_user()
         return [{
+            '_id':user._id,
             'aadhaar_no': user.aadhaar_no,
             'name': user.name,
             'dob': user.dob,
@@ -22,12 +23,13 @@ class UserAPI:
     def get_user_by_user_id(user_id):
         user = User.get_by_id(user_id)
         return {
-            'aadhaar_no': user._id,
+            'aadhaar_no': user.aadhaar_no,
             'name': user.name,
             'dob':user.dob,
             'gender':user.gender,
             'address':user.address,
-            'mobile_no':user.mobile_no
+            'mobile_no':user.mobile_no,
+            '_id':user._id
                 }
 
     @staticmethod
