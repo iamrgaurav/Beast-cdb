@@ -72,7 +72,7 @@ class Sim:
             data[aadhaar]= count
         keys = list(data.keys())
         for key in keys:
-            if data[key]<count:
+            if data[key]<int(count):
                 del data[key]
         return data
 
