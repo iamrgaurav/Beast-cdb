@@ -68,7 +68,7 @@ class Sim:
         data = {}
         for aadhaar in aadhaars:
             count=0
-            count = Database.count('sim',{'aadhaar_no':aadhaar})
+            count = Database.count('sim',{'aadhaar_no':{aadhaar}})
             data[aadhaar]= count
         keys = list(data.keys())
         for key in aadhaars:
