@@ -80,12 +80,20 @@ class Authorize(Resource):
                 'data': [AdminAPI.authenticate_admin(username, password)]
             }
 
-    @admin_namespace.route('/list')
-    class ListResource(Resource):
+    @admin_namespace.route('/list-by-count')
+    class ListSimCount(Resource):
         @admin_namespace.doc(params={
             'count': {'in': 'formData', 'description': 'The no of count you want to query', 'required': 'True'}})
         def post(self):
             count = request.form['count']
+            return AdminAPI.gets_user_by_count(count), 200
+
+    @admin_namespace.route('/list-by-lsa')
+    class ListSimCount(Resource):
+        @admin_namespace.doc(params={
+            'lsa': {'in': 'formData', 'description': 'Local Service Area', 'required': 'True'}})
+        def post(self):
+            count = request.form['lsa']
             return AdminAPI.gets_user_by_count(count), 200
 
 

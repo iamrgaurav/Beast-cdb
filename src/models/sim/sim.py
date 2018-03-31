@@ -59,6 +59,11 @@ class Sim:
         return [cls(**data) for data in cluster_data if data is not None]if cluster_data is not None else None
 
     @classmethod
+    def get_sim_in_lsa(cls,lsa):
+        cluster_data = Database.find(SimConstants.COLLECTIONS, {"lsa":lsa})
+        return [cls(**data) for data in cluster_data if data is not None] if cluster_data is not None else None
+
+    @classmethod
     def list_by_count(cls,scount):
         sims = cls.get_all_sim()
         aadhaars = []
@@ -77,10 +82,17 @@ class Sim:
         return data
 
     @classmethod
-    def list_by_lsa(cls):
-        sims = cls.get_all_sim()
+    def list_by_lsa(cls,lsa):
+        sims = cls.get_sim_in_lsa(lsa)
         aadhaars = []
         for sim in sims:
-            aadhaars.append(sim.lsa)
-            aadhaars = list(set(aadhaars))
+            aadhaars.append(sim.aadhaar_no)
+        aadhaars = list(set(aadhaars))
+        data = {}
+        for aadhaar in aadhaars:
+            count = 0
+            count = Database.count('sim', {'aadhar_no': aadhaar})
+            data[aadhaar] = count
+
+        return data
 
