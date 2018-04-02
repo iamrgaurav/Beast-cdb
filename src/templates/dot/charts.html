@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Dashboard{% endblock %}
+{% block title %}Charts{% endblock %}
 {% block header %}
     <a class="navbar-brand" href="#">Department of Telecommunications Ministry of Communication</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -8,46 +8,32 @@
     <!-- Navbar links -->
     <div class="collapse navbar-collapse text-white" id="collapsibleNavbar">
         <ul class="navbar-nav ml-auto">
-            {% if session['uid'] == None %}
-                <li class="nav-item">
-                    <a class="nav-link text-white btn btn-success" href="#">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Home</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link text-white btn btn-danger" href="{{ url_for('logout') }}">Logout</a>
-                </li>
-            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link text-white btn btn-danger" href="{{ url_for('logout') }}">Logout</a>
+            </li>
         </ul>
     </div>
 {% endblock %}
 {% block body %}
     <div class="mt-2 card bg-secondary text-center">
-        <div class = "d-flex flex-lg-row flex-sm-column flex-md-row flex-column p-2">
-            <div class = "col-sm-12 col-md-4 col-lg-4 flex-column">
-                <img src = "{{ url_for('static', filename = 'assets/images/ava.png') }}" height="150" width="150">
-                <h3 class = "text-white">{{ admin.username }}</h3>
+        <div class="d-flex flex-lg-row flex-sm-column flex-md-row flex-column p-2">
+            <div class="col-sm-12 col-md-4 col-lg-4 flex-column">
+                <img src="{{ url_for('static', filename = 'assets/images/ava.png') }}" height="150" width="150">
+                <h3 class="text-white">{{ admin.username }}</h3>
             </div>
-            <div class = "col-sm-12 col-md-4 col-lg-4 flex-column">
+            <div class="col-sm-12 col-md-4 col-lg-4 flex-column">
 
                 <h3 class="text-white">Name</h3>
-                <div class = "text-white">{{ admin.title }} {{ admin.name }}</div>
-            </div>
-            <div class = "col-sm-12 col-md-4 col-lg-4 flex-column">
-                <h3 class = "text-white">Date of Birth</h3>
-                <div class = "text-white">{{ admin.dob.strftime("%d/%m/%Y") }}</div>
+                <div class="text-white">{{ admin.name }}</div>
             </div>
         </div>
     </div>
-    <div class = "card mt-2 p-2">
-        <ul class="nav nav-pills">
-            <div class = "col-lg-6 col-md-6 col-sm-12 flex-column text-white">
-            <a class = "btn btn-success w-100 mt-2"><i class="fas fa-chart-pie"></i> Charts</a>
+    <div class="card mt-2 p-2">
+        <div class="nav nav-pills">
+            <div class="col-lg-6 col-md-6 col-sm-12 flex-column text-white">
+                <a class="btn btn-success w-100 mt-2"><i class="fas fa-chart-pie"></i> Charts</a>
             </div>
-
-        </ul>
+        </div>
         <table id="myTable" class="table-bordered table-striped table-hover table-responsive display">
             <thead class="bg-dark text-white w-100">
             <tr>
@@ -63,6 +49,5 @@
 
 
 {% block javascript %}
- <script src="{{ url_for('static',filename='js/charts.js') }}">
-
+    <script src="{{ url_for('static',filename='js/charts.js') }}"></script>
 {% endblock %}

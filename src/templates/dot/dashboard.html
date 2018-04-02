@@ -24,21 +24,17 @@
             <div class = "col-sm-12 col-md-4 col-lg-4 flex-column">
 
                 <h3 class="text-white">Name</h3>
-                <div class = "text-white">{{ admin.title }} {{ admin.name }}</div>
-            </div>
-            <div class = "col-sm-12 col-md-4 col-lg-4 flex-column">
-                <h3 class = "text-white">Date of Birth</h3>
-                <div class = "text-white">{{ admin.dob.strftime("%d/%m/%Y") }}</div>
+                <div class = "text-white">{{ admin.name }}</div>
             </div>
         </div>
     </div>
-    < class = "card mt-2 p-2">
+    <div class = "card mt-2 p-2">
         <h3>Menu</h3>
         <hr>
         <ul class="nav nav-pills">
 
             <div class = "col-lg-6 col-md-6 col-sm-12 flex-column text-white">
-            <a class = "btn btn-success w-100 mt-2" href{{ url_for('admin.') }} ><i class="fas fa-building"></i> List User By LSA</a>
+            <a class = "btn btn-success w-100 mt-2" href{{ url_for('admin.l') }} ><i class="fas fa-building"></i> List User By LSA</a>
             <a class = "btn btn-success w-100 mt-2" href{{ url_for('sim counts.html') }}><i class="fas fa-exclamation-triangle"></i> List User By Sim Counts</a>
             </div>
         </ul>

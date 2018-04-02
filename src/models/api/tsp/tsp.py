@@ -30,10 +30,8 @@ class TSPApi:
                 user_info = {
                     'aadhaar_no': data['aadhaar'],
                     'name': data['name'],
-                    'dob': data['dob'],
                     'address': data['address'],
-                    'mobile_no': data['phone'],
-                    'gender': data['gender']}
+                    'mobile_no': data['phone']}
                 if User(**user_info).save_to_db():
                     return Sim(aadhaar_no, mobile, tsp, lsa, issue_date).save_to_db()
             else:

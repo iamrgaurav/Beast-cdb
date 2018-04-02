@@ -1,8 +1,7 @@
 import uuid
-import datetime
 
-import src.models.dot.constants as AdminConstants
-import src.models.dot.errors as Errors
+import src.models.dot.constants as adminConstants
+import src.models.dot.errors as errors
 
 from src.common.Utility.Utility import CommonUtility as DotUtility
 
@@ -17,31 +16,28 @@ class Admin:
         self.password = password
         self._id = uuid.uuid4().hex if _id is None else _id
         self.name = DotUtility.formating_name(name)
-        self.dob = datetime.datetime.strptime(dob,"%Y-%m-%d") if isinstance(dob, str) else dob
         self.privileges = privileges
-        self.title = title
 
     def json(self):
         return {
-            'username':self.username,
-            'password':self.password,
-            '_id':self._id,
-            'name':self.name,
-            'dob':self.dob.strftime("%Y-%m-%d"),
-            'privileges':self.privileges,
-            'title':self.title
+            'username': self.username,
+            'password': self.password,
+            '_id': self._id,
+            'name': self.name,
+            'privileges': self.privileges
         }
+
     @classmethod
     def get_by_id(cls, admin_id):
-        data = Database.find_one(AdminConstants.COLLECTION, {'_id':admin_id})
+        data = Database.find_one(adminConstants.COLLECTION, {'_id': admin_id})
         return cls(**data) if data is not None else False
 
     def save_to_db(self):
-        return Database.update(AdminConstants.COLLECTION, {'_id':self._id}, self.json())
+        return Database.update(adminConstants.COLLECTION, {'_id': self._id}, self.json())
 
     @classmethod
-    def get_by_username(cls,username):
-        data = Database.find_one(AdminConstants.COLLECTION,{'username': username})
+    def get_by_username(cls, username):
+        data = Database.find_one(adminConstants.COLLECTION, {'username': username})
         return cls(**data) if data is not None else False
 
     @classmethod
@@ -57,15 +53,15 @@ class Admin:
         admin = cls.get_by_username(username)
         if not admin:
             # Tells that user doesn't exist
-            raise Errors.AdminNotExistError('There is no account with the username: {}'.format(username))
+            raise errors.AdminNotExistError('There is no account with the username: {}'.format(username))
         if not Utils.check_hashed_password(password, admin.password):
-            raise Errors.PasswordIncorrectError('Incorrect Password ' +password)
+            raise errors.PasswordIncorrectError('Incorrect Password ' + password)
 
         return admin
 
     @classmethod
     def list_all_admin(cls):
-        cluster_data = Database.find(AdminConstants.COLLECTION, {})
+        cluster_data = Database.find(adminConstants.COLLECTION, {})
         return [cls(**data) for data in cluster_data if data is not None] if cluster_data is not None else None
 
     @staticmethod

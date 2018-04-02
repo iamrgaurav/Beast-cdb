@@ -10,15 +10,13 @@ class AdminAPI:
             'username': user.username,
             'password': user.password,
             'name': user.name,
-            'dob': user.dob,
-            'privileges': user.privileges,
-            'title': user.title
+            'privileges': user.privileges
         } for user in users if user is not None] \
             if users is not None else None
 
     @staticmethod
-    def create_new_user(username, password, name, dob, privileges, title):
-        return Admin(username=username, password=password, name=name, dob=dob, privileges=privileges, title=title).save_to_db()
+    def create_new_user(username, password, name, privileges):
+        return Admin(username=username, password=password, name=name,  privileges=privileges).save_to_db()
 
     @staticmethod
     def get_admin_by_admin_id(user_id):
@@ -28,9 +26,7 @@ class AdminAPI:
             'username': user.username,
             'password': user.password,
             'name': user.name,
-            'dob': user.dob,
-            'privileges': user.privileges,
-            'title': user.title
+            'privileges': user.privileges
         }
 
     @staticmethod
@@ -39,8 +35,8 @@ class AdminAPI:
         if admin.is_login_valid(username, password):
             return {'username': admin.username,
                     'name':admin.name,
-                    'dob':admin.dob.strftime("%Y-%m-%d"),
-                    'privileges': admin.privileges
+                    'privileges': admin.privileges,
+                    '_id':admin._id
             }
         else:
             return "No Valid User"

@@ -39,7 +39,6 @@ class ListUser(Resource):
     @admin_namespace.doc(params={
         'username': {'in': 'formData', 'description': 'Admin Username', 'required': 'True'},
         'password': {'in': 'formData', 'description': 'Admin Password', 'required': 'True'},
-        'dob': {'in': 'formData', 'description': 'User Date of Birth', 'required': 'True'},
         'name': {'in': 'formData', 'description': 'User Name', 'required': 'True'},
 
         'privileges': {'in': 'formData', 'description': 'User Privileges', 'required': 'True'},
@@ -48,11 +47,9 @@ class ListUser(Resource):
     def post(self):
         username = request.form['username']
         name = request.form['name']
-        dob = request.form['dob']
         password = request.form['password']
         privileges = request.form['privileges']
-        title = request.form['title']
-        if AdminAPI.create_new_user(username, name, dob, password, privileges, title):
+        if AdminAPI.create_new_user(username, name, password, privileges):
             return 201
         else:
             return 400
