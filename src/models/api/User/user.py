@@ -8,26 +8,18 @@ class UserAPI:
         return [{
             '_id':user._id,
             'aadhaar_no': user.aadhaar_no,
-            'name': user.name,
-            'dob': user.dob,
-            'mobile_no': user.mobile_no,
-            'gender': user.gender,
-            'address': user.address
+            'mobile_no': user.mobile_no
         } for user in users if user is not None]\
             if users is not None else None
 
     @staticmethod
-    def create_new_user(aadhaar_no,name,dob,address,mobile_no,gender):
-        return User(aadhaar_no=aadhaar_no,name=name,dob=dob,address=address,mobile_no=mobile_no,gender=gender).save_to_db()
+    def create_new_user(aadhaar_no,mobile_no):
+        return User(aadhaar_no=aadhaar_no,mobile_no=mobile_no,).save_to_db()
     @staticmethod
     def get_user_by_user_id(user_id):
         user = User.get_by_id(user_id)
         return {
             'aadhaar_no': user.aadhaar_no,
-            'name': user.name,
-            'dob':user.dob,
-            'gender':user.gender,
-            'address':user.address,
             'mobile_no':user.mobile_no,
             '_id':user._id
                 }
@@ -48,10 +40,6 @@ class UserAPI:
         if otp.otp == user_otp:
             return {
                 'aadhaar_no': user.aadhaar_no,
-                'name': user.name,
-                'dob': user.dob,
-                'gender': user.gender,
-                'address': user.address,
                 'mobile_no': user.mobile_no,
                 "_id":user._id
             }
