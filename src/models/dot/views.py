@@ -59,7 +59,7 @@ def ajax_by_lsa():
 
 @admin_blueprint.route('/list-by-count')
 def list_by_count():
-    return render_template('dot/lsa.html')
+    return render_template('dot/sim_counts.html')
 
 @admin_blueprint.route('/by-count')
 def ajax_by_count():
