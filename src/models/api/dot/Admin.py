@@ -1,3 +1,4 @@
+from src.common.Utility.utils import Utils
 from src.models.dot.dot import Admin
 from src.models.sim.sim import Sim
 
@@ -16,7 +17,7 @@ class AdminAPI:
 
     @staticmethod
     def create_new_user(username, password, name, privileges):
-        return Admin(username=username, password=password, name=name,  privileges=privileges).save_to_db()
+        return Admin(username=username, password= Utils.hash_password(password), name=name,  privileges=privileges).save_to_db()
 
     @staticmethod
     def get_admin_by_admin_id(user_id):
