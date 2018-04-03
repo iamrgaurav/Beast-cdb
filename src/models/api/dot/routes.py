@@ -46,7 +46,7 @@ class ListUser(Resource):
         name = request.form['name']
         password = request.form['password']
         privileges = request.form['privileges']
-        if AdminAPI.create_new_user(username, name, password, privileges):
+        if AdminAPI.create_new_user(username =username, name = name, password = password, privileges = privileges):
             return {'msg': 'Admin created Successfully'}, 201
         else:
             return {'msg': 'There is some error'}, 400
