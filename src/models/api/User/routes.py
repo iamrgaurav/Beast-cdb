@@ -36,13 +36,9 @@ class ListUser(Resource):
     })
     def post(self):
         aadhaar_no = request.form['aadhaar_no']
-        name = request.form['name']
-        dob = request.form['dob']
-        address = request.form['address']
         mobile_no = request.form['mobile_no']
-        gender = request.form['gender']
         if UserAPI.create_new_user(aadhaar_no=aadhaar_no, mobile_no=mobile_no):
-            return {"msg":"User Created successfuly"}, 201
+            return {"msg":"User Created successfully"}, 201
         else:
             return {"msg": "User can't be Created"}, 400
 
