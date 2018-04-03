@@ -11,7 +11,7 @@ from src.models.sim.sim import Sim
 
 
 class Admin:
-    def __init__(self, username, password, name, dob, privileges, title, _id=None):
+    def __init__(self, username, password, name, privileges, _id=None):
         self.username = username.strip()
         self.password = password
         self._id = uuid.uuid4().hex if _id is None else _id

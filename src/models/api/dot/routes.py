@@ -22,10 +22,8 @@ def verify_token(token):
 admin_model = admin_namespace.model('Admin', {
     'username': fields.String(required=True, description='Admin Username'),
     'password': fields.String(required=True, description='Admin Password'),
-    'dob': fields.String(required=True, description='Admin Date of Birth'),
     'name': fields.String(required=True, description='Admin Name'),
-    'privileges': fields.String(required=True, description='Admin Privileges'),
-    'title': fields.String(required=True, description='Admin title'),
+    'privileges': fields.String(required=True, description='Admin Privileges')
 })
 
 
@@ -39,10 +37,9 @@ class ListUser(Resource):
     @admin_namespace.doc(params={
         'username': {'in': 'formData', 'description': 'Admin Username', 'required': 'True'},
         'password': {'in': 'formData', 'description': 'Admin Password', 'required': 'True'},
-        'name': {'in': 'formData', 'description': 'User Name', 'required': 'True'},
+        'name': {'in': 'formData', 'description': 'Admin Name', 'required': 'True'},
 
-        'privileges': {'in': 'formData', 'description': 'User Privileges', 'required': 'True'},
-        'title': {'in': 'formData', 'description': 'User Title', 'required': 'True'},
+        'privileges': {'in': 'formData', 'description': 'User Privileges', 'required': 'True'}
     })
     def post(self):
         username = request.form['username']
@@ -50,9 +47,9 @@ class ListUser(Resource):
         password = request.form['password']
         privileges = request.form['privileges']
         if AdminAPI.create_new_user(username, name, password, privileges):
-            return 201
+            return {'msg': 'Admin created Successfully'}, 201
         else:
-            return 400
+            return {'msg': 'There is some error'}, 400
 
 
 @admin_namespace.route('/<string:admin_id>')
@@ -65,7 +62,7 @@ class SingleUser(Resource):
 class Authorize(Resource):
     @admin_namespace.doc(params={
         'username': {'in': 'formData', 'description': 'Username of Dot Admin', 'required': 'True'},
-        'password': {'in': 'formData', 'description': 'Username of Dot Admin', 'required': 'True'}})
+        'password': {'in': 'formData', 'description': 'Password of Dot Admin', 'required': 'True'}})
     @admin_namespace.response(200, "You are Authorize")
     def post(self):
         username = request.form['username']
@@ -83,9 +80,9 @@ class Authorize(Resource):
             'count': {'in': 'formData', 'description': 'The no of count you want to query', 'required': 'True'}})
         def post(self):
             count = request.form['count']
-            datas = AdminAPI.gets_user_by_count(count)
+            cluster_data = AdminAPI.gets_user_by_count(count)
             return {"msg":"successful",
-                "data":[{'aadhaar': key, 'count': datas[key]} for key in datas.keys()]} if datas is not None or False else {'msg':'No User'}
+                "data":[{'aadhaar': key, 'count': cluster_data[key]} for key in cluster_data.keys()]} if cluster_data is not None or False else {'msg':'No User'}
 
 
     @admin_namespace.route('/list-by-lsa')
@@ -94,10 +91,10 @@ class Authorize(Resource):
             'lsa': {'in': 'formData', 'description': 'Local Service Area', 'required': 'True'}})
         def post(self):
             lsa = request.form['lsa']
-            datas = AdminAPI.list_users_by_lsa(lsa)
+            cluster_data = AdminAPI.list_users_by_lsa(lsa)
             return {"msg": "successful",
-                    "data": [{'aadhaar': key, 'count': datas[key]} for key in
-                             datas.keys()]} if datas is not None or False else {'msg': 'No User'}
+                    "data": [{'aadhaar': key, 'count': cluster_data[key]} for key in
+                             cluster_data.keys()]} if cluster_data is not None or False else {'msg': 'No User'}
 
 
 

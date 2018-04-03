@@ -11,10 +11,8 @@ from src.common.Utility.Utility import CommonUtility as User_Utility
 
 
 class User:
-    def __init__(self, aadhaar_no, name, address, mobile_no, _id=None):
+    def __init__(self, aadhaar_no, mobile_no, _id=None):
         self.aadhaar_no = User_Utility.formating_aadhaar(aadhaar_no)
-        self.name = User_Utility.formating_name(name)
-        self.address = address
         self.mobile_no = User_Utility.formating_phone(mobile_no)
         self._id = uuid.uuid4().hex if _id is None else _id
 
@@ -26,8 +24,6 @@ class User:
     def json(self):
         return {
             'aadhaar_no': self.aadhaar_no,
-            'name': self.name,
-            'address': self.address,
             'mobile_no': self.mobile_no,
             '_id': self._id
         }

@@ -1,3 +1,4 @@
+import requests
 from flask import Blueprint, request, session, redirect, url_for, render_template, jsonify
 
 from src.models.dot.dot import Admin
@@ -39,3 +40,36 @@ def redirect_to_dash():
     else:
         return redirect(url_for('.view_dashboard', user_id = session['uid']))
 
+@admin_blueprint.route('/list-by-lsa')
+def list_by_lsa():
+    return render_template('dot/lsa.html')
+
+@admin_blueprint.route('/by-lsa')
+def ajax_by_lsa():
+    lsa = request.form['lsa']
+    req = requests.post("https://beast-cdb.herokuapp.com", data = {"lsa":lsa}).json()
+    return jsonify({'data':
+        [{
+            'sr_no':str(i+1),
+            'aadhaar':req['data'][i]['aadhaar'],
+            'count': req['data'][i]['count'],
+        }
+            for i in range(len(req['data']))]
+    })
+
+@admin_blueprint.route('/list-by-count')
+def list_by_count():
+    return render_template('dot/lsa.html')
+
+@admin_blueprint.route('/by-count')
+def ajax_by_count():
+    count = request.form['count']
+    req = requests.post("https://beast-cdb.herokuapp.com", data = {"lsa":count}).json()
+    return jsonify({'data':
+        [{
+            'sr_no':str(i+1),
+            'aadhaar':req['data'][i]['aadhaar'],
+            'count': req['data'][i]['count']
+        }
+            for i in range(len(req['data']))]
+    })
