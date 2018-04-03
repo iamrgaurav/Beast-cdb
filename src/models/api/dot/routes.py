@@ -54,8 +54,8 @@ class ListUser(Resource):
 
 @admin_namespace.route('/<string:admin_id>')
 class SingleUser(Resource):
-    def get(self, user_id):
-        return jsonify(AdminAPI.get_admin_by_admin_id(user_id))
+    def get(self, admin_id):
+        return jsonify(AdminAPI.get_admin_by_admin_id(admin_id))
 
 
 @admin_namespace.route('/login')
@@ -63,7 +63,6 @@ class Authorize(Resource):
     @admin_namespace.doc(params={
         'username': {'in': 'formData', 'description': 'Username of Dot Admin', 'required': 'True'},
         'password': {'in': 'formData', 'description': 'Password of Dot Admin', 'required': 'True'}})
-    @admin_namespace.response(200, "You are Authorize")
     def post(self):
         username = request.form['username']
         password = request.form['password']
@@ -74,30 +73,24 @@ class Authorize(Resource):
                 'data': [AdminAPI.authenticate_admin(username, password)]
             }
 
-    @admin_namespace.route('/list-by-count')
-    class ListSimCount(Resource):
-        @admin_namespace.doc(params={
-            'count': {'in': 'formData', 'description': 'The no of count you want to query', 'required': 'True'}})
-        def post(self):
-            count = request.form['count']
-            cluster_data = AdminAPI.gets_user_by_count(count)
-            return {"msg":"successful",
-                "data":[{'aadhaar': key, 'count': cluster_data[key]} for key in cluster_data.keys()]} if cluster_data is not None or False else {'msg':'No User'}
+@admin_namespace.route('/list-by-count')
+class ListSimCount(Resource):
+    @admin_namespace.doc(params={
+        'count': {'in': 'formData', 'description': 'The no of count you want to query', 'required': 'True'}})
+    def post(self):
+        count = request.form['count']
+        cluster_data = AdminAPI.gets_user_by_count(count)
+        return {"msg":"successful",
+            "data":[{'aadhaar': key, 'count': cluster_data[key]} for key in cluster_data.keys()]} if cluster_data is not None or False else {'msg':'No User'}
 
 
-    @admin_namespace.route('/list-by-lsa')
-    class ListSimlsa(Resource):
-        @admin_namespace.doc(params={
-            'lsa': {'in': 'formData', 'description': 'Local Service Area', 'required': 'True'}})
-        def post(self):
-            lsa = request.form['lsa']
-            cluster_data = AdminAPI.list_users_by_lsa(lsa)
-            return {"msg": "successful",
-                    "data": [{'aadhaar': key, 'count': cluster_data[key]} for key in
-                             cluster_data.keys()]} if cluster_data is not None or False else {'msg': 'No User'}
-
-
-
-
-
-
+@admin_namespace.route('/list-by-lsa')
+class ListSimlsa(Resource):
+    @admin_namespace.doc(params={
+        'lsa': {'in': 'formData', 'description': 'Local Service Area', 'required': 'True'}})
+    def post(self):
+        lsa = request.form['lsa']
+        cluster_data = AdminAPI.list_users_by_lsa(lsa)
+        return {"msg": "successful",
+                "data": [{'aadhaar': key, 'count': cluster_data[key]} for key in
+                         cluster_data.keys()]} if cluster_data is not None or False else {'msg': 'No User'}
