@@ -1,5 +1,6 @@
 $(document).ready(function () {
     $('#example').DataTable({
+
         "processing": true,
         "ajax": "/admin/sim",
         "columns": [

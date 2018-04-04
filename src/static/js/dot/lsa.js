@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     $('#myTable').DataTable({
         "scrollx": true,
         "ajax": "/admin/by-lsa",

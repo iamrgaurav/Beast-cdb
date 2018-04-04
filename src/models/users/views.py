@@ -9,14 +9,13 @@ def view_dashboard(user_id):
 @user_blueprint.route('/sim')
 def user_sim():
     user = User.get_by_id(session['uid'])
-    sims = user.get_sim_details()
     return jsonify({'data':
         [{
             'sr_no':str(i+1),
-            'sim_no':sims[i].sim_no,
-            'tsp':sims[i].tsp,
-            'lsa':sims[i].lsa,
-            'issue_date':"{}".format(sims[i].issue_date.strftime('%d/%m/%Y'))
+            'sim_no':user.sim_cards[i].sim_no,
+            'tsp':user.sim_cards[i].tsp,
+            'lsa':user.sim_cards[i].lsa,
+            'issue_date':"{}".format(user.sim_cards[i].issue_date.strftime('%d/%m/%Y'))
              }
-            for i in range(len(sims))]
+            for i in range(len(user.sim_cards))]
     })
