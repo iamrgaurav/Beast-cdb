@@ -7,7 +7,7 @@ from src.common.Utility.Utility import CommonUtility as DotUtility
 
 from src.common.database import Database
 from src.common.Utility.utils import Utils
-from src.models.sim.sim import Sim
+from src.models.users.user import User
 
 
 class Admin:
@@ -65,5 +65,9 @@ class Admin:
         return [cls(**data) for data in cluster_data if data is not None] if cluster_data is not None else None
 
     @staticmethod
-    def list_all_sims():
-        return Sim.get_all_sim()
+    def gets_user_by_count(count):
+        return User.list_by_count(count)
+
+    @staticmethod
+    def list_users_by_lsa(lsa):
+        return User.list_by_lsa(lsa)

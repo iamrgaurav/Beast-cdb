@@ -1,4 +1,4 @@
-from flask_restplus import Resource, Namespace,fields
+from flask_restplus import Resource, Namespace, fields
 from flask import jsonify, g
 from flask import request
 
@@ -6,9 +6,10 @@ from flask_httpauth import HTTPTokenAuth
 import src.models.api.guser as guser
 from src.models.api.dot.Admin import AdminAPI
 
-admin_namespace = Namespace('DOT Admin','There are Various Operations regarding Admin')
+admin_namespace = Namespace('DOT Admin', 'There are Various Operations regarding Admin')
 
 auth = HTTPTokenAuth(scheme='Token')
+
 
 @auth.verify_token
 def verify_token(token):
@@ -33,7 +34,6 @@ class ListUser(Resource):
         users = AdminAPI.get_all_admin()
         return jsonify({"data": users})
 
-    @admin_namespace.response(201, 'User Has been created Successfuly', admin_model)
     @admin_namespace.doc(params={
         'username': {'in': 'formData', 'description': 'Admin Username', 'required': 'True'},
         'password': {'in': 'formData', 'description': 'Admin Password', 'required': 'True'},
@@ -46,7 +46,7 @@ class ListUser(Resource):
         name = request.form['name']
         password = request.form['password']
         privileges = request.form['privileges']
-        if AdminAPI.create_new_user(username =username, name = name, password = password, privileges = privileges):
+        if AdminAPI.create_new_user(username=username, name=name, password=password, privileges=privileges):
             return {'msg': 'Admin created Successfully'}, 201
         else:
             return {'msg': 'There is some error'}, 400
@@ -73,6 +73,7 @@ class Authorize(Resource):
                 'data': [AdminAPI.authenticate_admin(username, password)]
             }
 
+
 @admin_namespace.route('/list-by-count')
 class ListSimCount(Resource):
     @admin_namespace.doc(params={
@@ -80,8 +81,9 @@ class ListSimCount(Resource):
     def post(self):
         count = request.form['count']
         cluster_data = AdminAPI.gets_user_by_count(count)
-        return {"msg":"successful",
-            "data":[{'aadhaar': key, 'count': cluster_data[key]} for key in cluster_data.keys()]} if cluster_data is not None or False else {'msg':'No User'}
+        return {"msg": "successful",
+                "data": [{'aadhaar': key, 'count': cluster_data[key]} for key in
+                         cluster_data.keys()]} if cluster_data is not None or False else {'msg': 'No User'}
 
 
 @admin_namespace.route('/list-by-lsa')

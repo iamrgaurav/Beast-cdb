@@ -40,21 +40,20 @@ def redirect_to_dash():
     else:
         return redirect(url_for('.view_dashboard', user_id = session['uid']))
 
-@admin_blueprint.route('/list-by-lsa')
+@admin_blueprint.route('/list-by-lsa', methods = ['GET', 'POST'])
 def list_by_lsa():
     if request.method == "POST":
-        lsa = request.form['count']
-        req = requests.post("https://beast-cdb.herokuapp.com/api/list-by-lsa", data={"lsa": lsa}).json()
-        data = req['data']
-        return render_template('dot/sim_counts.html', data=data)
+        lsa = request.form["lsa"]
+
+        data = Admin.list_users_by_lsa(lsa)
+        return render_template('dot/lsa.html', data=data)
     return render_template('dot/lsa.html')
 
 
-@admin_blueprint.route('/list-by-count', methods = ["GET", "POST"])
+@admin_blueprint.route('/list-by-count', methods=["GET", "POST"])
 def list_by_count():
     if request.method == "POST":
-        count = request.form['count']
-        req = requests.post("https://beast-cdb.herokuapp.com/api/list-by-count", data={"count": count}).json()
-        data = req['data']
+        count = request.form["count"]
+        data = Admin.gets_user_by_count(count)
         return render_template('dot/sim_counts.html', data=data)
     return render_template('dot/sim_counts.html')

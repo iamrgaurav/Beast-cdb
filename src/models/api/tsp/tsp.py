@@ -1,42 +1,35 @@
 import requests
 
-from src.models.sim.sim import Sim
 from src.config import fake_aadhaar_url as fau
 from src.models.users.user import User
 
 
 class TSPApi:
     @staticmethod
-    def get_sims_by_aadhaar(aadhaar, tsp):
-        sims = Sim.get_by_aadhaar(aadhaar)
-        return {'aadhaar_no': aadhaar,
-                'sim': [{'lsa': sim.lsa,
-                         'tsp': sim.tsp,
-                         'mobile': sim.sim_no,
-                         'issue_date': sim.issue_date.strftime("%Y-%m-%d")
-                         } for sim in sims if tsp == sim.tsp] if sims is not None else 0,
-                'sims_by_other_tsp': Sim.get_sim_count_by_tsp(aadhaar),
-                'Total_Sim': len(sims)
+    def get_sims_by_aadhaar(aadhaar:str, tsp:str):
+        user = User.get_by_aadhaar(aadhaar)
+        return {'aadhaar_no': user.aadhaar,
+                'sim_cards_by_your_tsp':[sim_card.json() for sim_card in user.sim_cards if sim_card.tsp == tsp],
+                'sim_cards_by_other_tsp':[user.count_sim(tsp)]
                 }
 
     @staticmethod
     def save_sim(mobile, tsp, issue_date, lsa, aadhaar_no):
         user = User.get_by_aadhaar(aadhaar_no)
         if user:
-            return Sim(aadhaar_no, mobile, tsp, lsa, issue_date).save_to_db()
+            return user.add_sim_card(mobile,tsp,lsa,issue_date)
         else:
             data = requests.post(fau, data={'aadhaar_no': aadhaar_no}).json()
             if data is not None:
                 user_info = {
                     'aadhaar_no': data['aadhaar'],
-                    'name': data['name'],
-                    'address': data['address'],
                     'mobile_no': data['phone']}
-                if User(**user_info).save_to_db():
-                    return Sim(aadhaar_no, mobile, tsp, lsa, issue_date).save_to_db()
-            else:
-                return None
+                user = User(**user_info)
+                if user.add_sim_card(mobile, tsp, lsa, issue_date):
+                    return {'msg':'User create Successfully'}, 200
+                return {'msg':'There is no record of adhaar {}'.format(aadhaar_no)},400
+            return {'msg':'Some unusual Error'}, 400
 
     @classmethod
     def del_user(cls, aadhaar, phone):
-        return Sim.del_by_tsp(aadhaar,phone)
+        pass

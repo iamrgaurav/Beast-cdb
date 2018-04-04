@@ -1,6 +1,9 @@
 from src.common.Utility.utils import Utils
 from src.models.dot.dot import Admin
-from src.models.sim.sim import Sim
+
+
+from src.models.users.user import User
+
 
 class AdminAPI:
     @staticmethod
@@ -43,10 +46,9 @@ class AdminAPI:
             return "No Valid User"
     @staticmethod
     def gets_user_by_count(count):
-        return Sim.list_by_count(count)
+        return Admin.gets_user_by_count(count)
 
     @staticmethod
     def list_users_by_lsa(lsa):
-        return Sim.list_by_lsa(lsa)
-
+        return Admin.list_users_by_lsa(lsa)
 

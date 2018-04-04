@@ -1,4 +1,3 @@
-import datetime
 
 from flask_restplus import Resource, Namespace
 from flask import jsonify,g
@@ -24,7 +23,7 @@ def verify_token(token):
 
 
 @auth.login_required
-@TSP_namespace.route('/sim')
+@TSP_namespace.route('/view-sim')
 class User_Info(Resource):
     @TSP_namespace.doc(params={
         'aadhaar_no': {'in': 'formData', 'description': 'User Aadhaar Number', 'required': 'True'},
@@ -34,7 +33,8 @@ class User_Info(Resource):
         tsp = request.form['tsp']
         sims = TSPApi.get_sims_by_aadhaar(aadhaar_no,tsp)
         return jsonify({"data": sims})
-@TSP_namespace.route('/')
+
+@TSP_namespace.route('/register-sim')
 class User_Info_add(Resource):
     @TSP_namespace.doc(params={
         'aadhaar_no': {'in': 'formData', 'description': 'User Aadhaar Number', 'required': 'True'},
@@ -49,22 +49,8 @@ class User_Info_add(Resource):
         issue_date = request.form['issue_date']
         lsa = request.form['lsa']
         aadhaar_no = request.form['aadhaar_no']
-        return 200 if TSPApi.save_sim(mobile,tsp,issue_date,lsa,aadhaar_no) else 400
+        return TSPApi.save_sim(mobile,tsp,issue_date,lsa,aadhaar_no)
 
-@TSP_namespace.route('/')
-class User_Info_add(Resource):
-    @TSP_namespace.doc(params={
-        'aadhaar_no': {'in': 'formData', 'description': 'User Aadhaar Number', 'required': 'True'},
-        'mobile_no':{'in': 'formData', 'description': 'User Phone Number in Format +91xxxxxxxxxxx', 'required': 'True'},
-
-    })
-    def post(self):
-        mobile = request.form['mobile_no']
-        tsp = request.form['tsp']
-        issue_date = datetime.datetime.now().strftime("%Y-%m-%d")
-        lsa = request.form['lsa']
-        aadhaar_no = request.form['aadhaar_no']
-        return 200 if TSPApi.save_sim(mobile,tsp,issue_date,lsa,aadhaar_no) else 400
 
 @TSP_namespace.route('/delete')
 class DelSimCount(Resource):

@@ -9,44 +9,60 @@
     <div class="collapse navbar-collapse text-white" id="collapsibleNavbar">
         <ul class="navbar-nav ml-auto">
 
-                <li class="nav-item">
-                    <a class="nav-link text-white btn btn-danger" href="{{ url_for('logout') }}">Logout</a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link text-white btn btn-danger" href="{{ url_for('logout') }}">Logout</a>
+            </li>
         </ul>
     </div>
 {% endblock %}
 {% block body %}
-    <div class = "card mt-2 p-2">
+    <div class="card mt-2 p-2">
+        <h3>Menu</h3>
         <div class="nav nav-pills">
-            <div class = "col-lg-6 col-md-6 col-sm-12 flex-column text-white">
-            <a class = "btn btn-success w-100 mt-2"><i class="fas fa-exclamation-triangle"></i> List User By Sim Counts</a>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 flex-column text-white">
+                <a class="btn btn-success w-100 mt-2" href="{{ url_for('admin.list_by_lsa') }}"><i
+                        class="fas fa-building"></i> List User By LSA</a>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 flex-column text-white">
+                <a class="btn btn-success w-100 mt-2" href="{{ url_for('admin.list_by_count') }}"><i
+                        class="fas fa-exclamation-triangle"></i> List User By Sim Counts</a>
             </div>
         </div>
 
-                  <form method="post" action = "{{ url_for('admin.ajax_by_count') }}">
-
-           	  	      <div class="form-group">
-           	  		      <label for="count">Count:</label>
-           	  		      <input type="text" name="count" id = "count" >
-           	  	      </div>
-
-                  </form>
-        <table id="myTable" class="table-bordered table-striped table-hover table-responsive display">
-            <thead class="bg-dark text-white w-100">
-            <tr>
-                <th>Name</th>
-                <th>content</th>
-                <th>extension</th>
-                <th>details</th>
-            </tr>
-            </thead>
-
-        </table>
     </div>
-{% endblock %}
+    <div class="card mt-2 p-2">
+        <h2>List By Sim Counts</h2>
+        <form method="post" action="{{ url_for('admin.list_by_count') }}">
+            <div class="form-group">
+                <label for="count" class="label">Count</label>
+                <input type="text" class="form-control" name="count" id="count">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Search</button>
+            </div>
 
+        </form>
+    </div>
+    {% if data %}
+        <div class="card mt-2 p-2">
+            <table id="myTable" class="table-striped table-hover">
+                <thead class="bg-dark text-white">
+                <tr>
+                    <th>Aadhaar No</th>
+                    <th>Sim Cards Issued</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for key in data.keys() %}
 
-{% block javascript %}
-    <script src="{{ url_for('static',filename='js/lsa.js') }}"></script>
-
+                    <tr>
+                        <td>{{ key }}</td>
+                        <td>{{ data[key] }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
 {% endblock %}
