@@ -29,7 +29,7 @@ class UserAPI:
             'aadhaar_no': user.aadhaar_no,
             'sim_cards': [{ 'sim_no': sim_card.sim_no,
                             'lsa': sim_card.lsa,
-                            'tsp': sim_card.lsa,
+                            'tsp': sim_card.tsp,
                             '_id': sim_card._id} for sim_card in user.sim_cards if sim_card is not None] if user.sim_cards is not None else {"msg":"Data Not Found"}}
 
     @staticmethod
