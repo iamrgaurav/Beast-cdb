@@ -37,7 +37,7 @@ class UserAPI:
     def authenticate_user(otp_id, user_otp):
         otp = OTP.get_recent_otp(otp_id)
         user = User.get_by_aadhaar(otp.aadhaar_no)
-        if otp.otp == user_otp:
+        if int(otp.otp) == int(user_otp):
             return {
                 'aadhaar_no': user.aadhaar_no,
                 'mobile_no': user.mobile_no,
