@@ -64,10 +64,10 @@ class Authorize(Resource):
         'otp': {'in': 'formData', 'description': 'OTP Sent To User', 'required': 'True'}})
     def post(self, otp_id):
         user_otp = request.form['otp']
-        return jsonify(UserAPI.authenticate_user(otp_id, user_otp)), 200
+        return UserAPI.authenticate_user(otp_id, user_otp), 200
 
 
 @user_namespace.route('/sim-registered/<string:user_id>')
 class UserSims(Resource):
     def get(self, user_id):
-        return jsonify({'data': UserAPI.get_sims(user_id)})
+        return {'data': UserAPI.get_sims(user_id)}
