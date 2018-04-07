@@ -8,7 +8,7 @@ class TSPApi:
     @staticmethod
     def get_sims_by_aadhaar(aadhaar:str, tsp:str):
         user = User.get_by_aadhaar(aadhaar)
-        return {'aadhaar_no': user.aadhaar,
+        return {'aadhaar_no': user.aadhaar_no,
                 'sim_cards_by_your_tsp':[sim_card.json() for sim_card in user.sim_cards if sim_card.tsp == tsp],
                 'sim_cards_by_other_tsp':[user.count_sim(tsp)]
                 }

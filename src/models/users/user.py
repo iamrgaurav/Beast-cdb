@@ -81,12 +81,12 @@ class User:
         return user_list
 
     @classmethod
-    def list_by_lsa(cls, lsa):
+    def list_by_lsa(cls, lsa:str):
         users = User.list_all_user()
         user_list = {}
         for user in users:
             user_sim_count = len(user.sim_cards)
             for sim_card in user.sim_cards:
-                if sim_card.lsa == lsa:
+                if sim_card.lsa.lower() == lsa.lower():
                     user_list[user.aadhaar_no]=user_sim_count
             return user_list
