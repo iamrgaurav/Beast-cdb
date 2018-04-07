@@ -60,14 +60,15 @@ class User:
 
     def count_sim(self, sent_tsp = None):
         sim_counts = {}
-        cluster_tsp = list(set([sim.tsp for sim in self.sim_cards]))
+        cluster_tsp = list(set([sim.tsp for sim in self.sim_cards])) if self.sim_cards is not None else None
         cluster_tsp = cluster_tsp if sent_tsp is None or sent_tsp not in cluster_tsp else cluster_tsp.remove(sent_tsp)
-        for tsp in cluster_tsp:
-            count = 0
-            for sim in self.sim_cards:
-                if tsp == sim.tsp:
-                    count += 1
-            sim_counts[tsp] = count
+        if cluster_tsp is not None:
+            for tsp in cluster_tsp:
+                count = 0
+                for sim in self.sim_cards:
+                    if tsp == sim.tsp:
+                        count += 1
+                sim_counts[tsp] = count
         return sim_counts
 
 
