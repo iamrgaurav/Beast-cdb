@@ -61,7 +61,7 @@ class User:
     def count_sim(self, sent_tsp = None):
         sim_counts = {}
         cluster_tsp = list(set([sim.tsp for sim in self.sim_cards]))
-        if sent_tsp is in cluster_tsp:
+        if sent_tsp in cluster_tsp:
             cluster_tsp.remove(sent_tsp)
         if cluster_tsp is not None:
             for tsp in cluster_tsp:
