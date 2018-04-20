@@ -67,7 +67,7 @@ class Utils:
     @staticmethod
     def send_otp(otp, mobile_number):
         payload = {
-            "authkey": "203412ABi6bldnL5t5aacbefc",
+            "authkey": "210038AqPYiXNaL5ad20c84",
             "message": "Your Verification Code is " + otp,
             "sender": "OTPSMS",
             "mobile": mobile_number,
@@ -77,6 +77,6 @@ class Utils:
             "template": "6",
         }
         url = 'http://control.msg91.com/api/sendotp.php'
-        #if requests.post(url, payload):
-           #return True
+        if requests.post(url, payload):
+           return True
         return True
