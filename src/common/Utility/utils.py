@@ -79,4 +79,4 @@ class Utils:
         url = 'http://control.msg91.com/api/sendotp.php'
         if requests.post(url, payload):
            return True
-        return True
+
