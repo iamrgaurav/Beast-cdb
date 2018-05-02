@@ -35,5 +35,5 @@ class CommonUtility:
                 f_phone = "+91"+f_phone
             return f_phone
         else:
-            raise Errors.PhoneError("Phone Number must be of the format xxxxx-xxxxx or xxxxxxxxxx")
+            raise Errors.PhoneError("Phone Number must be of the format or +91xxxxxxxxxx xxxxx-xxxxx or xxxxxxxxxx")
 
