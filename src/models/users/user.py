@@ -37,7 +37,8 @@ class User:
     def add_sim_card(self, sim_no,tsp,lsa,issue_date):
         sim = Sim(sim_no=sim_no, tsp=tsp, lsa=lsa, issue_date=issue_date)
         self.sim_cards = [sim] if self.sim_cards is None else self.sim_cards.append(sim)
-        return Database.update(UserConstants.COLLECTIONS,{'_id':self._id},{'$set': {'sim_cards': [sim.json() for sim in self.sim_cards if sim is not None] if self.sim_cards is not None else self.sim_cards }})
+        return self.save_to_db()
+     #Database.update(UserConstants.COLLECTIONS,{'_id':self._id},{'$set': {'sim_cards': [sim.json() for sim in self.sim_cards if sim is not None] if self.sim_cards is not None else self.sim_cards }})
 
     @classmethod
     def list_all_user(cls):
